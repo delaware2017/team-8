@@ -1,1 +1,37 @@
 node_modules
+
+# Specifies intentionally untracked files to ignore when using Git
+# http://git-scm.com/docs/gitignore
+
+mobile-app/*~
+mobile-app/*.sw[mnpcod]
+mobile-app/*.log
+mobile-app/*.tmp
+mobile-app/*.tmp.*
+mobile-app/log.txt
+mobile-app/*.sublime-project
+mobile-app/*.sublime-workspace
+mobile-app/.vscode/
+mobile-app/npm-debug.log*
+
+mobile-app/.idea/
+mobile-app/.sourcemaps/
+mobile-app/.sass-cache/
+mobile-app/.tmp/
+mobile-app/.versions/
+mobile-app/coverage/
+mobile-app/dist/
+mobile-app/node_modules/
+mobile-app/tmp/
+mobile-app/temp/
+mobile-app/hooks/
+mobile-app/platforms/
+mobile-app/plugins/
+mobile-app/plugins/android.json
+mobile-app/plugins/ios.json
+mobile-app/www/
+mobile-app/$RECYCLE.BIN/
+
+mobile-app/.DS_Store
+mobile-app/Thumbs.db
+mobile-app/UserInterfaceState.xcuserstate
