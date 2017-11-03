@@ -1,6 +1,8 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { NavController, Slides } from 'ionic-angular';
 
+import { HomePage } from '../home/home';
+
 @Component({
   selector: 'page-register',
   templateUrl: 'register.html'
@@ -38,6 +40,7 @@ export class RegisterPage implements OnInit {
       //try to signup
     } else {
       this.error_message = "Please fill out all fields";
+      this.navCtrl.setRoot(HomePage);
     }
   }
 }
