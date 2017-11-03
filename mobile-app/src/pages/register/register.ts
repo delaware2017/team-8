@@ -5,7 +5,7 @@ import { NavController, Slides } from 'ionic-angular';
   selector: 'page-register',
   templateUrl: 'register.html'
 })
-export class RegisterPage {
+export class RegisterPage implements OnInit {
   @ViewChild(Slides) slides: Slides;
 
   constructor(public navCtrl: NavController) {}
