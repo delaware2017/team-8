@@ -5,9 +5,29 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-slides>
   
+    <ion-slide>
+      <ion-list inset>
+          
+        <ion-item class="floating">
+          <ion-input type="text" placeholder="Access Code"></ion-input>
+        </ion-item>
+      
+      </ion-list>
+    </ion-slide>
+  
+    <ion-slide>
+      <h2>Slide 2</h2>
+    </ion-slide>
+  
+    <ion-slide>
+      <h2>Slide 3</h2>
+    </ion-slide>
+  
+  </ion-slides>
 </ion-content>
 
 <ion-footer padding>
-  <button ion-button full round>Next</button>
+  <button ion-button full round (click)="next()">Next</button>
 </ion-footer>
