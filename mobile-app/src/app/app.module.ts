@@ -20,7 +20,9 @@ import { HomePage } from '../pages/home/home';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp, {
+      mode: 'md'
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
