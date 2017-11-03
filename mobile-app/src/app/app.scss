@@ -15,6 +15,13 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
-ion-item.floating {
+.floating {
+  width: 100%;
+  border: none;
+  padding: 10px;
+  font-size: 18px;
+  outline: none;
   border-bottom: 3px solid map-get($colors, 'primary') !important;
+  box-sizing: border-box;
+  margin: 10px 0;
 }
