@@ -2,6 +2,11 @@
   <ion-navbar>
     <button ion-button menuToggle><ion-icon name="menu"></ion-icon></button>
     <ion-title>Dashboard</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="openScanner()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -19,6 +24,7 @@
       <div class="qr-container">
         <qr-code [value]="'http://www.google.com'" [size]="200"></qr-code>
       </div>
+      <input type="text" class="floating" [(ngModel)]="max_amount" placeholder="Max amount">
       <button ion-button block (click)="finishTransaction()">Done</button>
     </ion-card-content>
   </ion-card>

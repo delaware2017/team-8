@@ -72,7 +72,7 @@ function (err) {
 })
 
 router.post('/alogin', function(req, res) {
-  console.log('admin login:');
+  console.log('admin login: ' + req.body.password);
   Admin.findOne({username: req.body.username}, function(err, admin) {
     if (err) throw err;
     if(req.body.password==admin.password) {

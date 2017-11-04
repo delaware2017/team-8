@@ -1,0 +1,5 @@
+page-scanner {
+  p.error {
+    color: map-get($colors, 'danger');
+  }
+}
