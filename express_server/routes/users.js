@@ -95,7 +95,8 @@ router.post('/:id/add', function(req, res) {
     var newTransaction = new Transaction({
       "amount": req.body.add,
       "retailer": "Physician",
-      "positive": true
+      "positive": true,
+      "date": Date.now()
     })
     newTransaction.save(function(err, newTransaction) {
       user.transactions.push(newTransaction._id);
@@ -113,7 +114,8 @@ router.post('/:id/:max', function(req, res) {
       var newTransaction = new Transaction({
         "amount": req.body.deduct,
         "retailer": req.body.retailer,
-        "positive": false
+        "positive": false,
+        "date": Date.now()
       })
       newTransaction.save(function(err, newTransaction) {
         user.transactions.push(newTransaction._id);
