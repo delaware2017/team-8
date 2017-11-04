@@ -7,20 +7,24 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { QRCodeModule } from 'angular2-qrcode';
 
 import { MyApp } from './app.component';
+import { TabsPage } from '../pages/tabs/tabs';
 import { LandingPage } from '../pages/landing/landing';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 import { HomePage } from '../pages/home/home';
+import { LocationsPage } from '../pages/locations/locations';
 
 import { IAMService } from '../services/iam.service';
 
 @NgModule({
   declarations: [
     MyApp,
+    TabsPage,
     LandingPage,
     LoginPage,
     RegisterPage,
-    HomePage
+    HomePage,
+    LocationsPage
   ],
   imports: [
     BrowserModule,
@@ -32,10 +36,12 @@ import { IAMService } from '../services/iam.service';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    TabsPage,
     LandingPage,
     LoginPage,
     RegisterPage,
-    HomePage
+    HomePage,
+    LocationsPage
   ],
   providers: [
     IAMService,

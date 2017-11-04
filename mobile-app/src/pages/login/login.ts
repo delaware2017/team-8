@@ -1,7 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { NavController, Slides, LoadingController } from 'ionic-angular';
 
-import { HomePage } from '../home/home';
+import { TabsPage } from '../tabs/tabs';
 
 @Component({
   selector: 'page-login',
@@ -27,7 +27,7 @@ export class LoginPage implements OnInit {
     loading.present();
   
     setTimeout(() => {
-      this.navCtrl.setRoot(HomePage);
+      this.navCtrl.setRoot(TabsPage);
       loading.dismiss();
     }, 1000);
   }
