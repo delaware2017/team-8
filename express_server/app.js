@@ -47,6 +47,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors({origin: 'http://localhost:8100'}));
+app.use(cors({origin: 'http://localhost:3000'}));
 
 app.use(routes(passport))
 app.use(users)
@@ -74,8 +75,8 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen(3000, function () { // TODO: Change port back
-  console.log('Express listening at', 3000);
+app.listen(3001, function () { // TODO: Change port back
+  console.log('Express listening at', 3001);
 });
 
 module.exports = app;

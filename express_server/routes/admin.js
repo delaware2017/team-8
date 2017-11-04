@@ -49,7 +49,7 @@ router.post('/accessCodes', function(req, res) {
   })
 })
 
-router.post('/admin/signup', (req, res) => {
+router.post('/asignup', (req, res) => {
   var admin = new Admin({
     "username": req.body.username,
     "password": req.body.password,
@@ -70,7 +70,8 @@ function (err) {
 });
 })
 
-router.post('/admin/login', function(req, res) {
+router.post('/alogin', function(req, res) {
+  console.log('admin login:');
   Admin.findOne({username: req.body.username}, function(err, admin) {
     if (err) throw err;
     if(req.body.password==admin.password) {
@@ -82,7 +83,9 @@ router.post('/admin/login', function(req, res) {
           callback();
         });
       },
+
     function (err) {
+      console.log("error: " + JSON.stringify(info));
       res.send(info);
     });
     }

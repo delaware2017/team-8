@@ -4,6 +4,7 @@ import './App.css';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import request from 'superagent';
 
 class App extends Component {
     constructor() {
@@ -121,13 +122,23 @@ class UsernameAndPassword extends Component {
   }
 
   auth() {
-    // if succesfull, call this.props.changeViews
-    if (this.state.username.length < 1 || this.state.username.length < 1) {
-      alert("Please make sure you enter both a username and password.");
-      return;
-    }
+      // if succesfull, call this.props.changeViews
+      if (this.state.username.length < 1 || this.state.username.length < 1) {
+        alert("Please make sure you enter both a username and password.");
+        return;
+      }
 
-    
+        fetch('http://localhost:3001' + '/alogin', {
+        method: 'POST',
+        headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+        body: formBody
+      })
+      .then((res) => {
+        console.log("res: " + JSON.stringify(res));
+      })
   }
 }
 
