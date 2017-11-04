@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Register</ion-title>
+    <ion-title>Sign Up</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -16,7 +16,6 @@
       <input type="text" class="floating" [(ngModel)]="first_name" placeholder="First name">
       <input type="text" class="floating" [(ngModel)]="last_name" placeholder="Last name">
       <input type="text" class="floating" [(ngModel)]="email_address" placeholder="Email address">
-      <input type="text" class="floating" [(ngModel)]="phone_number" placeholder="Phone number">
       <input type="number" class="floating" [(ngModel)]="family_members" placeholder="# of family members">
       <p class="error" *ngIf="error_message">{{ error_message }}</p>
     </ion-slide>
@@ -29,6 +28,6 @@
 </ion-content>
 
 <ion-footer padding>
-  <button ion-button full round (click)="next()" *ngIf="slides.getActiveIndex() == 0">Next</button>
-  <button ion-button full round (click)="signUp()" *ngIf="slides.getActiveIndex() == 1">Sign Up</button>
+  <button ion-button full (click)="next()" *ngIf="slides.getActiveIndex() == 0">Next</button>
+  <button ion-button full (click)="signUp()" *ngIf="slides.getActiveIndex() == 1">Sign Up</button>
 </ion-footer>

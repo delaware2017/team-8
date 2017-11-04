@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { NavController, Slides } from 'ionic-angular';
+import { NavController, Slides, LoadingController } from 'ionic-angular';
 
 import { HomePage } from '../home/home';
 
@@ -18,7 +18,7 @@ export class RegisterPage implements OnInit {
 
   error_message: String = "";
 
-  constructor(public navCtrl: NavController) {}
+  constructor(private navCtrl: NavController, private loadingCtrl: LoadingController) {}
 
   ngOnInit() {
     this.slides.lockSwipes(true);
@@ -29,18 +29,30 @@ export class RegisterPage implements OnInit {
 
     if (this.slides.getActiveIndex() == 0) {
       // do necessary calls to validate access code and then continue
-      this.slides.slideNext();
+      let loading = this.loadingCtrl.create({
+        content: 'Please wait...'
+      });
+    
+      loading.present();
+    
+      setTimeout(() => {
+        this.slides.slideNext();
+        this.slides.lockSwipes(true);
+        loading.dismiss();
+      }, 1000);
     }
-
-    this.slides.lockSwipes(true);
   }
 
   signUp() {
-    if (this.first_name && this.last_name && this.email_address && this.phone_number && this.family_members) {
-      //try to signup
-    } else {
-      this.error_message = "Please fill out all fields";
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+  
+    loading.present();
+  
+    setTimeout(() => {
       this.navCtrl.setRoot(HomePage);
-    }
+      loading.dismiss();
+    }, 1000);
   }
 }
