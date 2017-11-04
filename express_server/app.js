@@ -27,7 +27,7 @@ function automaticBalance() {
   User.find({}, function(err, users) {
     if(err) throw err;
     for(var i=0; i<users.length; i++) {
-      users[i].balance=(parseInt(users[i].balance)+users[i].numFamily).toString();
+      users[i].balance=(parseFloat(users[i].balance)+users[i].numFamily).toString();
       console.log(users[i].balance);
       users[i].save();
     }
