@@ -6,47 +6,73 @@ import TextField from 'material-ui/TextField';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class App extends Component {
-  constructor() {
-    super();
-    this.changeViews = this.changeViews.bind(this);
-    this.state = {
-      showMainPage: true
+    constructor() {
+      super();
+      this.changeViews = this.changeViews.bind(this);
+      this.state = {
+        showMainPage: true
+      }
     }
-  }
-  render() {
-    return (
-      <div className="App">
-          <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <h1 className="App-title">Welcome to _name_</h1>
-          </header>
-        <MuiThemeProvider>
-        {this.state.showMainPage && 
-          <UsernameAndPassword changeViews={this.changeViews}/>
-        }
-        {!this.state.showMainPage && 
-          <AdminPage/>
-        }
-        </MuiThemeProvider>
-      </div>
-    );
-  }
+    render() {
+      return (
+        <div className="App">
+            <header className="App-header">
+              <img src={logo} className="App-logo" alt="logo" />
+              <h1 className="App-title">Welcome to _name_</h1>
+            </header>
 
-  changeViews(event) {
-    // Go from main page to admin page.
-    this.setState({
-      showMainPage: !this.state.showMainPage
-    })
-  }
-}
+
+            
+            <MuiThemeProvider>
+
+            {this.state.showMainPage && 
+              <UsernameAndPassword changeViews={this.changeViews}/>
+            }
+            {!this.state.showMainPage && 
+              <AdminPage/>
+            }
+            </MuiThemeProvider>
+        </div>
+      );
+    }
+
+    changeViews(event) {
+      // Go from main page to admin page.
+      this.setState({
+        showMainPage: !this.state.showMainPage
+      })
+    }
+}            
+
 
 class AdminPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+        constructor(props) {
+          super(props);
+          this.state = {
 
-    }
-  }
+          }
+        }
+
+        render() {
+          return (
+            <div className="AdminPage">
+                <header className="App-header">
+                  <img src={logo} className="App-logo" alt="logo" />
+                  <h1 className="Admin-title">Administrative records</h1>
+                </header>
+
+              <MuiThemeProvider>
+              {this.state.showMainPage && 
+                <UsernameAndPassword changeViews={this.changeViews}/>
+              }
+              {!this.state.showMainPage && 
+                <AdminPage/>
+              }
+              </MuiThemeProvider>
+            </div>
+          );
+        }
+
 }
 
 class UsernameAndPassword extends Component {
