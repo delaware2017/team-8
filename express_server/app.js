@@ -16,7 +16,7 @@ var routes = require('./routes/routes');
 var admin = require('./routes/admin');
 var mongoose = require('mongoose');
 
-mongoose.createConnection(key.mongoURL, { config: { autoIndex: false } });
+mongoose.connect("mongodb://dchang2:asdf@ds147265.mlab.com:47265/team-8");
 var app = express();
 var router = express.Router();
 
