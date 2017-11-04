@@ -5,8 +5,9 @@ var storeSchema = mongoose.Schema({
   name: {type: String},
   time: {type: String},
   distance: {type: String},
-  latitude: {type: String},
-  longitude: {type: String}
+  latitude: {type: Number},
+  longitude: {type: Number},
+  address: {type: String}
 })
 
 // Export schema =====================================================================================================================================================================
