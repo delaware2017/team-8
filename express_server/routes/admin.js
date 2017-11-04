@@ -32,8 +32,8 @@ router.post('/accessCodes/create/:id', function(req, res) {
   })
 });
 
-router.post('/accessCodes/:id', function(req, res) {
-  Code.findOne({code: req.params.id}, function(err, code) {
+router.post('/accessCodes', function(req, res) {
+  Code.findOne({code: req.body.code}, function(err, code) {
     if (err) {
       res.send("no code");
     }
@@ -91,6 +91,5 @@ router.post('/admin/login', function(req, res) {
     }
   })
 })
-
 
 module.exports = router;
