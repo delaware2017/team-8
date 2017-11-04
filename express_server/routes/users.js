@@ -135,7 +135,8 @@ router.post('/:id/:max', function(req, res) {
       var newTransaction = new Transaction({
         "amount": req.params.max,
         "retailer": req.body.retailer,
-        "positive": false
+        "positive": false,
+        "date": Date.now()
       })
       newTransaction.save(function(err, newTransaction) {
         user.transactions.push(newTransaction._id);
