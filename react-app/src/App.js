@@ -5,6 +5,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import request from 'superagent';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 
 class App extends Component {
     constructor() {
@@ -50,11 +52,32 @@ class AdminPage extends Component {
           super(props);
           console.log(typeof this.props.patients);
           this.state = {
-            patients: this.props.patients
+            patients: this.props.patients,
+            open: false
           }
+          this.createNewUser = this.createNewUser.bind(this);
+          this.handleClose = this.handleClose.bind(this);
         }
 
+        handleClose() {
+          this.setState({
+            open: !this.state.open
+          })
+        }
         render() {
+              const actions = [
+                <FlatButton
+                  label="Cancel"
+                  primary={true}
+                  onClick={this.handleClose}
+                />,
+                <FlatButton
+                  label="Submit"
+                  primary={true}
+                  keyboardFocused={true}
+                  onClick={this.handleClose}
+                />,
+        ];
           return (
             <div id="wrapper">
             <link rel="stylesheet" href="assets/css/main.css" />
@@ -75,12 +98,27 @@ class AdminPage extends Component {
                 })
               }
                   <article className="thumb">
-                    <a href="images/fulls/01.jpg" className="image"><img src="images/thumbs/01.jpg" alt="" /></a>
-                    <h2 style={{'fontSize': '15px'}}><a href="">{patient.firstName} {patient.lastName}: Current balance: ${patient.balance}. Click to add.</a></h2>
+                    <a href="javascript:void(0);" onClick={this.createNewUser} className="image"><img src="images/thumbs/01.jpg" alt="" /></a>
+                    <h2 onClick={this.createNewUser} style={{'fontSize': '15px'}}><a href="javascript:void(0);"> Click here to create a new user profile, today, now!</a></h2>
                   </article>
+                <Dialog
+                    title="Dialog With Actions"
+                    actions={actions}
+                    modal={false}
+                    open={this.state.open}
+                    onRequestClose={this.handleClose}
+                  >
+                    The actions in this window were passed in as an array of React objects.
+                </Dialog>
             </div>
           </div>
           )
+        }
+
+        createNewUser() {
+          this.setState({
+            open: !this.state.open
+          })
         }
 
 }
