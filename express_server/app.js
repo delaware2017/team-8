@@ -5,18 +5,20 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var key = require('./secret/key.json');
-var session = require('express-session')
+var session = require('express-session');
 var passport = require('./config/passport');
 var cookieParser = require('cookie-parser');
 
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var routes = require('./routes/routes');
+var admin = require('./routes/admin');
 var mongoose = require('mongoose');
 
 mongoose.createConnection(key.mongoURL, { config: { autoIndex: false } });
-
 var app = express();
+var router = express.Router();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -29,7 +31,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
+app.use(passport.session());
 
+app.use(routes(passport))
+app.use(users)
+app.use(index)
+app.use(admin)
 app.use('/', index);
 app.use('/users', users);
 

@@ -7,8 +7,17 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
 
+  transaction_open: boolean = false;
+
   constructor(public navCtrl: NavController) {
 
   }
 
+  newTransaction() {
+    this.transaction_open = true;
+  }
+
+  finishTransaction() {
+    this.transaction_open = false;
+  }
 }
