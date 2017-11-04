@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
@@ -12,7 +11,7 @@ export class HomePage {
   navigator: any;
   Connection: any;
 
-  constructor(private platform: Platform) {}
+  constructor() {}
 
   newTransaction() {
     this.transaction_open = true;
