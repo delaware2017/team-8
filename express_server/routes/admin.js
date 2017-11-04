@@ -63,19 +63,17 @@ router.post('/asignup', (req, res) => {
 });
 
 router.post('/alogin', function(req, res) {
-  console.log('admin login: ' + req.body.password);
+  console.log('admin login:');
   Admin.findOne({username: req.body.username}, function(err, admin) {
     if (err) throw err;
     if(req.body.password==admin.password) {
       var info = [];
       async.each(admin.listOfUsers,
       function(user, callback){
-        if(user) {
         User.findById(user, function(err, userInfo) {
           info.push({"firstName": userInfo.firstName, "lastName": userInfo.lastName, "balance": userInfo.balance});
           callback();
         });
-      }
       },
 
     function (err) {
