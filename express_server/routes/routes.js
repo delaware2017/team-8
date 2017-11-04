@@ -7,16 +7,32 @@ module.exports = function(passport) {
 
   // Retrieve registration page
   router.get('/signup', function(req, res) {
-    res.render('index');
+    res.send("signup")
   });
   router.get('/home', function(req, res) {
-    res.render('error');
+    res.send("successful signup");
   })
-  router.post('/signup', passport.authenticate('local-register', {
-      successRedirect : '/home',
-      failureRedirect : '/signup'
-    })
-  );
+  router.post('/signup', (req, res) => {
+    var user = new User();
+    user.username = req.body.username;
+    user.password = req.body.password;
+    // optional
+    user.firstName = req.body.firstName || "";
+    user.lastName = req.body.lastName || "";
+    user.address = req.body.address || "";
+    user.phone = req.body.phone || -1;
+    user.email = req.body.email || "";
+    user.numFaily = req.body.numFaily || 0;
+    user.balance = req.body.balance || 0;
+    user.physician = req.body.physician || null;
+    user.plan = req.body.plan || null;
+  });
+
+  // router.post('/signup', passport.authenticate('local-register', {
+  //     successRedirect : '/home',
+  //     failureRedirect : '/signup'
+  //   })
+  // );
 
   // Retrieve login page
   router.get('/', function(req, res) {
