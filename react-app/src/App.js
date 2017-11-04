@@ -15,17 +15,35 @@ class App extends Component {
             <h1 className="App-title">Welcome to _name_</h1>
           </header>
           <p className="App-intro">
-            <TextField 
-              hintText="Please enter your username"
-            /> <br/>
-            <TextField
-              hintText="Please enter your password"
-            /> <br/>
-            <RaisedButton label="Default" style={style}/>
+            <UsernameAndPassword/>
           </p>
         </MuiThemeProvider>
       </div>
     );
+  }
+}
+
+class UsernameAndPassword extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: "",
+      password: ""
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <TextField
+          hintText=""
+        /> < br/>
+        <TextField
+          hintText="Please enter your password"
+        /> <br/>
+        <RaisedButton label="default" style={style}/>
+      </div>
+    )
   }
 }
 
