@@ -12,6 +12,8 @@ import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 import { HomePage } from '../pages/home/home';
 
+import { IAMService } from '../services/iam.service';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -36,6 +38,7 @@ import { HomePage } from '../pages/home/home';
     HomePage
   ],
   providers: [
+    IAMService,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}

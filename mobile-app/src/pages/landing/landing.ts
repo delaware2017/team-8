@@ -10,7 +10,7 @@ import { RegisterPage } from '../register/register';
 })
 export class LandingPage {
 
-  constructor(public navCtrl: NavController) {}
+  constructor(private navCtrl: NavController) {}
 
   goToLogin() {
     this.navCtrl.push(LoginPage);
