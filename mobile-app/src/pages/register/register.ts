@@ -91,6 +91,7 @@ export class RegisterPage implements OnInit {
           loading.dismiss();
           if (data) {
             // successful user registration, data equals user id
+            data = data.substring(1, data.length - 1);
             this.iam.setCurrentUser(data);
   
             this.navCtrl.setRoot(TabsPage);
