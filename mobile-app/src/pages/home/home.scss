@@ -1,3 +1,27 @@
 page-home {
+  div.balance-container {
+    font-size: 18px;
+    
+    span.balance {
+      color: map-get($colors, 'primary');
+    }
+  }
 
+  ion-card {
+    margin-top: 20px !important;
+  }
+
+  ion-card.transaction {
+
+    button.transaction {
+      margin: 0 !important;
+      height: 53px !important;
+    }
+
+    div.qr-container {
+      width: 200px;
+      height: 200px;
+      margin: 30px auto 40px auto;
+    }
+  }
 }
