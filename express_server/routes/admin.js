@@ -53,17 +53,26 @@ router.post('/admin/signup', (req, res) => {
     "lastName": req.body.lastName
   });
   admin.save();
-  res.send(200);
+  res.send(listOfUsers);
 })
 
 router.post('/admin/login', function(req, res) {
-  Admin.findOne({username: req.body.username}, function(err, user) {
+  Admin.findOne({username: req.body.username}, function(err, admin) {
     if (err) throw err;
-    if(req.body.password==user.password) {
-      res.send("successful login");
+    if(req.body.password==admin.password) {
+      var info = [];
+      for(var i=0; i<admin.listOfUsers.length; i++) {
+        User.findById(admin.listOfUsers[i], function(err, user) {
+          info.push({"firstName": user.firstName, "lastName": user.lastName, "balance": user.balance});
+          console.log(info);
+        })
+        console.log(info);
+      }
+      console.log(info);
+      res.send(info);
     }
     else {
-      res.send("unsuccessful login");
+      res.send("error");
     }
   })
 })
