@@ -11,7 +11,8 @@ class App extends Component {
       super();
       this.changeViews = this.changeViews.bind(this);
       this.state = {
-        showMainPage: true
+        showMainPage: true,
+        patients: []
       }
     }
     render() {
@@ -26,7 +27,7 @@ class App extends Component {
               <UsernameAndPassword changeViews={this.changeViews}/>
             }
             {!this.state.showMainPage && 
-              <AdminPage/>
+              <AdminPage patients={this.state.patients} />
             }
             </MuiThemeProvider>
         </div>
@@ -37,7 +38,8 @@ class App extends Component {
       console.log("Got here! " + JSON.stringify(language));
       // Go from main page to admin page.
       this.setState({
-        showMainPage: !this.state.showMainPage
+        showMainPage: !this.state.showMainPage,
+        patients: language
       })
     }
 }            
@@ -46,8 +48,9 @@ class App extends Component {
 class AdminPage extends Component {
         constructor(props) {
           super(props);
+          console.log(typeof this.props.patients);
           this.state = {
-
+            patients: this.props.patients
           }
         }
 
@@ -61,66 +64,20 @@ class AdminPage extends Component {
 			      <script src="assets/js/util.js"></script>
             <script src="assets/js/main.js"></script>
             <div id="main">
-              <article className="thumb">
-                <a href="images/fulls/01.jpg" className="image"><img src="images/thumbs/01.jpg" alt="" /></a>
-                <h2>Magna feugiat lorem</h2>
-                <p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p>
-              </article>
-              <article className="thumb">
-                <a href="images/fulls/02.jpg" className="image"><img src="images/thumbs/02.jpg" alt="" /></a>
-                <h2>Nisl adipiscing</h2>
-                <p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p>
-              </article>
-              <article className="thumb">
-                <a href="images/fulls/03.jpg" className="image"><img src="images/thumbs/03.jpg" alt="" /></a>
-                <h2>Tempus aliquam veroeros</h2>
-                <p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p>
-              </article>
-              <article className="thumb">
-                <a href="images/fulls/04.jpg" className="image"><img src="images/thumbs/04.jpg" alt="" /></a>
-                <h2>Aliquam ipsum sed dolore</h2>
-                <p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p>
-              </article>
-              <article className="thumb">
-                <a href="images/fulls/05.jpg" className="image"><img src="images/thumbs/05.jpg" alt="" /></a>
-                <h2>Cursis aliquam nisl</h2>
-                <p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p>
-              </article>
-              <article className="thumb">
-                <a href="images/fulls/06.jpg" className="image"><img src="images/thumbs/06.jpg" alt="" /></a>
-                <h2>Sed consequat phasellus</h2>
-                <p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p>
-              </article>
-              <article className="thumb">
-                <a href="images/fulls/07.jpg" className="image"><img src="images/thumbs/07.jpg" alt="" /></a>
-                <h2>Mauris id tellus arcu</h2>
-                <p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p>
-              </article>
-              <article className="thumb">
-                <a href="images/fulls/08.jpg" className="image"><img src="images/thumbs/08.jpg" alt="" /></a>
-                <h2>Nunc vehicula id nulla</h2>
-                <p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p>
-              </article>
-              <article className="thumb">
-                <a href="images/fulls/09.jpg" className="image"><img src="images/thumbs/09.jpg" alt="" /></a>
-                <h2>Neque et faucibus viverra</h2>
-                <p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p>
-              </article>
-              <article className="thumb">
-                <a href="images/fulls/10.jpg" className="image"><img src="images/thumbs/10.jpg" alt="" /></a>
-                <h2>Mattis ante fermentum</h2>
-                <p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p>
-              </article>
-              <article className="thumb">
-                <a href="images/fulls/11.jpg" className="image"><img src="images/thumbs/11.jpg" alt="" /></a>
-                <h2>Sed ac elementum arcu</h2>
-                <p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p>
-              </article>
-              <article className="thumb">
-                <a href="images/fulls/12.jpg" className="image"><img src="images/thumbs/12.jpg" alt="" /></a>
-                <h2>Vehicula id nulla dignissim</h2>
-                <p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p>
-              </article>
+              {
+                this.props.patients.map((patient, index) => {
+                  return (
+                  <article className="thumb">
+                    <a href="images/fulls/01.jpg" className="image"><img src="images/thumbs/01.jpg" alt="" /></a>
+                    <h2 style={{'fontSize': '15px'}}><a href="">{patient.firstName} {patient.lastName}: Current balance: ${patient.balance}. Click to add.</a></h2>
+                  </article>
+                  )
+                })
+              }
+                  <article className="thumb">
+                    <a href="images/fulls/01.jpg" className="image"><img src="images/thumbs/01.jpg" alt="" /></a>
+                    <h2 style={{'fontSize': '15px'}}><a href="">{patient.firstName} {patient.lastName}: Current balance: ${patient.balance}. Click to add.</a></h2>
+                  </article>
             </div>
           </div>
           )
