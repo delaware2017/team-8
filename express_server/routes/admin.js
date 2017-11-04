@@ -36,7 +36,10 @@ router.post('/accessCodes/:id', function(req, res) {
     if (err) {
       res.send("no code");
     }
-    if(code.user) {
+    if(!code) {
+      res.send("no code")
+    }
+    else if(code.user) {
       res.send("code already used");
     }
     else {
