@@ -144,7 +144,7 @@ router.post('/nearestStores', function(req, res) {
     var info = [];
     console.log(stores);
     for(var i=0; i<stores.length; i++) {
-      info.push({"name": stores[i].name, "time": stores[i].time, "distance": stores[i].distance, "latitude": stores[i].latitude, "longitude": stores[i].longitude});
+      info.push({"name": stores[i].name, "address": stores[i].address, "time": stores[i].time, "distance": stores[i].distance, "latitude": stores[i].latitude, "longitude": stores[i].longitude});
     }
     res.send(info);
   })
