@@ -7,13 +7,11 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var key = require('./secret/key.json');
 var session = require('express-session');
-var passport = require('./config/passport');
 var cookieParser = require('cookie-parser');
 var cors = require('cors');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var routes = require('./routes/routes');
 var admin = require('./routes/admin');
 var mongoose = require('mongoose');
 var async = require('async');
