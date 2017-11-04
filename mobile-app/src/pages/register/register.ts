@@ -44,7 +44,7 @@ export class RegisterPage implements OnInit {
         });
         loading.present();
         
-        this.httpClient.post(this.config.getAPILocation() + '/accessCodes/' + this.access_code, {}, {responseType: 'text'}).subscribe(data => {
+        this.httpClient.post(this.config.getAPILocation() + '/accessCodes', {code: this.access_code}, {responseType: 'text'}).subscribe(data => {
           loading.dismiss();
           if (data == "valid code") {
             this.slides.slideNext();
@@ -76,26 +76,22 @@ export class RegisterPage implements OnInit {
           content: 'Please wait...'
         });
         loading.present();
-  
-        var headers = new HttpHeaders();
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
-  
-        let urlSearchParams = new URLSearchParams();
-  
-        urlSearchParams.append('firstName', this.firstName);
-        urlSearchParams.append('lastName', this.lastName);
-        urlSearchParams.append('username', this.username);
-        urlSearchParams.append('password', this.password_1);
-        urlSearchParams.append('email', this.email);
-        urlSearchParams.append('numFamily', this.numFamily);
-        urlSearchParams.append('code', this.access_code);
 
-        let body = urlSearchParams.toString()
+        let body = {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          username: this.username,
+          password: this.password_1,
+          email: this.email,
+          code: this.access_code,
+          numFamily: this.numFamily
+        }
   
-        this.httpClient.post(this.config.getAPILocation() + "/user/signup", body, {responseType: 'text', headers: headers}).subscribe(data => {
+        this.httpClient.post(this.config.getAPILocation() + "/user/signup", body, {responseType: 'text'}).subscribe(data => {
           loading.dismiss();
           if (data) {
             // successful user registration, data equals user id
+            data = data.substring(1, data.length - 1);
             this.iam.setCurrentUser(data);
   
             this.navCtrl.setRoot(TabsPage);

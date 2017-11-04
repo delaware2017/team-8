@@ -21,6 +21,18 @@ mongoose.connect("mongodb://dchang2:asdf@ds147265.mlab.com:47265/team-8");
 var app = express();
 var router = express.Router();
 
+var User = require('./models/user');
+setInterval(automaticBalance, 60000);
+function automaticBalance() {
+  User.find({}, function(err, users) {
+    if(err) throw err;
+    for(var i=0; i<users.length; i++) {
+      users[i].balance=(parseFloat(users[i].balance)+users[i].numFamily).toString();
+      console.log(users[i].balance);
+      users[i].save();
+    }
+  })
+}
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');

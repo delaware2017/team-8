@@ -15,6 +15,7 @@ import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 import { HomePage } from '../pages/home/home';
 import { LocationsPage } from '../pages/locations/locations';
+import { HistoryPage } from '../pages/history/history';
 
 import { IAMService } from '../services/iam.service';
 import { ConfigService } from '../services/config.service';
@@ -27,7 +28,8 @@ import { ConfigService } from '../services/config.service';
     LoginPage,
     RegisterPage,
     HomePage,
-    LocationsPage
+    LocationsPage,
+    HistoryPage
   ],
   imports: [
     BrowserModule,
@@ -48,7 +50,8 @@ import { ConfigService } from '../services/config.service';
     LoginPage,
     RegisterPage,
     HomePage,
-    LocationsPage
+    LocationsPage,
+    HistoryPage
   ],
   providers: [
     IAMService,

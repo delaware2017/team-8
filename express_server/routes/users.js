@@ -39,20 +39,31 @@ router.post('/user/signup', function(req, res) {
 })
 
 router.post('/login', function(req, res) {
-  // console.log(req.body + " req body username: " + req.body.username);
+  console.log(req.body);
   User.findOne({username: req.body.username}, function(err, user) {
     console.log(user);
-    if(req.body.password === user.password) {
-      res.send("successful login");
+    if (err) throw err;
+    if(req.body.password==user.password) {
+      res.send(user._id);
     }
     else {
       res.send("unsuccessful login");
     }
   })
 })
+router.post('/update', function(req, res) {
+
+})
+
+router.post('/balance', function(req, res) {
+  User.findById(req.body.id, function(err, user) {
+    if (err) throw err;
+    res.send(user.balance);
+  })
+})
 
 router.post('/:id/:balance', function(req, res) {
-  
+
 })
 
 module.exports = router;
