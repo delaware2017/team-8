@@ -3,8 +3,8 @@ import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { TabsPage } from '../pages/tabs/tabs';
 import { LandingPage } from '../pages/landing/landing';
-import { HomePage } from '../pages/home/home';
 
 import { IAMService } from '../services/iam.service';
 
@@ -12,6 +12,7 @@ import { IAMService } from '../services/iam.service';
   templateUrl: 'app.html'
 })
 export class MyApp {
+
   rootPage: any;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private iam: IAMService) {
@@ -23,17 +24,10 @@ export class MyApp {
     });
 
     if (iam.getCurrentUser()) {
-      // user has already logged in
-      this.rootPage = HomePage;
+      this.rootPage = TabsPage;
     } else {
-      // user has not logged in yet
       this.rootPage = LandingPage;
     }
-  }
-
-  logout() {
-    this.iam.setCurrentUser(null);
-    //this.navCtrl.setRoot(LandingPage);
   }
 }
 
