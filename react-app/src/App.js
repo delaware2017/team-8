@@ -101,7 +101,10 @@ class UsernameAndPassword extends Component {
       return;
     }
 
-    
+    fetch("http://localhost:3001/login")
+    .then((response) => {
+      console.log("response: " + response);
+    })
   }
 }
 
