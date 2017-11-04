@@ -44,7 +44,7 @@ router.post('/login', function(req, res) {
     console.log(user);
     if (err) throw err;
     if(req.body.password==user.password) {
-      res.send("successful login");
+      res.send(user._id);
     }
     else {
       res.send("unsuccessful login");
@@ -53,7 +53,7 @@ router.post('/login', function(req, res) {
 })
 
 router.post('/:id/:balance', function(req, res) {
-  
+
 })
 
 module.exports = router;
