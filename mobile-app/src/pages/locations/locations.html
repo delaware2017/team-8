@@ -6,5 +6,27 @@
 </ion-header>
 
 <ion-content padding>
-  retail locations
+
+  <ion-card *ngFor="let location of locations">
+      
+    <agm-map [latitude]="location.lat" [longitude]="location.lon">
+      <agm-marker [latitude]="location.lat" [longitude]="location.lon"></agm-marker>
+    </agm-map>
+  
+    <ion-item>
+      <ion-icon name="football" item-start large></ion-icon>
+      <h2>{{ location.name }}</h2>
+      <p>{{ location.address }}</p>
+    </ion-item>
+  
+    <ion-item>
+      <span item-left>{{ location.time_away }}</span>
+      <span item-left>({{ location.distance_away }})</span>
+      <button ion-button icon-left clear item-end>
+        <ion-icon name="navigate"></ion-icon>
+        Start
+      </button>
+    </ion-item>
+  
+  </ion-card>
 </ion-content>

@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { QRCodeModule } from 'angular2-qrcode';
+import { AgmCoreModule } from '@agm/core';
 
 import { MyApp } from './app.component';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -31,6 +32,9 @@ import { IAMService } from '../services/iam.service';
     QRCodeModule,
     IonicModule.forRoot(MyApp, {
       mode: 'md'
+    }),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyA0AHHZf_YsX00Iz1od2uMyeA5SlSxWXic'
     })
   ],
   bootstrap: [IonicApp],

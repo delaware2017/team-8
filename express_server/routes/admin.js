@@ -24,6 +24,7 @@ router.post('/accessCodes/create/:id', function(req, res) {
         if(err) throw err;
         user.accessCodes.push(newCode._id);
         user.save();
+        console.log(user);
         res.send("new code");
       })
     })
@@ -31,7 +32,7 @@ router.post('/accessCodes/create/:id', function(req, res) {
 });
 
 router.post('/accessCodes/:id', function(req, res) {
-  Code.findById(req.params.id, function(err, code) {
+  Code.findOne({code: req.params.id}, function(err, code) {
     if (err) {
       res.send("no code");
     }

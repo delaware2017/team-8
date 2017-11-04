@@ -7,7 +7,11 @@ export class IAMService {
   constructor() {}
 
   setCurrentUser(user_id) {
-    localStorage.setItem('user_id', user_id);
+    if (user_id == null) {
+      localStorage.clear();
+    } else {
+      localStorage.setItem('user_id', user_id);
+    }
   }
 
   getCurrentUser() {
