@@ -21,22 +21,27 @@ export class HistoryPage implements OnInit {
   constructor(private httpClient: HttpClient, private config: ConfigService, private iam: IAMService) {}
 
   ngOnInit() {
-    setInterval(() => {
     if (this.iam.getCurrentUser()) {
       this.httpClient.post(this.config.getAPILocation() + '/transactions', {id: this.iam.getCurrentUser()}).subscribe((data:any) => {
-        if (data) {
-          this.transactions = data;
-          for (let transaction of this.transactions) {
-            transaction.date = moment(transaction.date).toDate();
-          }
-          this.transactions.sort(this.compare);
+        if (this.iam.getCurrentUser()) {
+          this.httpClient.post(this.config.getAPILocation() + '/transactions', {id: this.iam.getCurrentUser()}).subscribe((data:any) => {
+            if (data) {
+              this.transactions = data;
+            }
+          });
         }
       });
-    }}, 1000);
-  }
+    }
 
-  compare(a,b) {
-    return <any>new Date(b.date) - <any>new Date(a.date);
+    setInterval(() => {
+      if (this.iam.getCurrentUser()) {
+        this.httpClient.post(this.config.getAPILocation() + '/transactions', {id: this.iam.getCurrentUser()}).subscribe((data:any) => {
+          if (data) {
+            this.transactions = data;
+          }
+        });
+      }
+    }, 1000);
   }
 
   getBalanceFormatted(balance) {
@@ -44,6 +49,6 @@ export class HistoryPage implements OnInit {
   }
 
   formatDate(date) {
-    return moment(date).subtract(4, 'hours').format("D MMMM YYYY, h:mm a");
+    return moment(date).format("D MMMM YYYY, h:mm a");
   }
 }
