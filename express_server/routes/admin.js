@@ -26,7 +26,7 @@ router.post('/accessCodes/create/:id', function(req, res) {
         user.accessCodes.push(newCode._id);
         user.save();
         console.log(user);
-        res.send("new code");
+        res.send(newCode.code);
       })
     })
   })
