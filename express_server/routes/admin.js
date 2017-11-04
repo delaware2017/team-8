@@ -71,7 +71,10 @@ router.post('/alogin', function(req, res) {
   Admin.findOne({username: req.body.username}, function(err, admin) {
     if (err) throw err;
     if(req.body.password==admin.password) {
-      var info = [];
+      User.find({'_id': admin.listOfUsers}, function(err, docs) {
+        res.send(docs);
+      })
+      /*
       async.each(admin.listOfUsers,
       function(user, callback){
         User.findById(user, function(err, userInfo) {
@@ -83,8 +86,8 @@ router.post('/alogin', function(req, res) {
     function (err) {
       console.log("error: " + JSON.stringify(info));
       res.send(info);
-    });
-    }
+    });*/
+  }
     else {
       res.send("error");
     }
