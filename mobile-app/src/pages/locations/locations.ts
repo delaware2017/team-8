@@ -12,11 +12,12 @@ import { IAMService } from '../../services/iam.service';
 })
 export class LocationsPage implements OnInit {
 
-  locations;
+  locations; // main array of locations
 
   constructor(private httpClient: HttpClient, private config: ConfigService, private iam: IAMService) {}
 
   ngOnInit() {
+    // download the locations (once)
     this.httpClient.post(this.config.getAPILocation() + '/nearestStores', {}).subscribe(data => {
       if (data) {
         this.locations = data;

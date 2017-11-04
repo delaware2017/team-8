@@ -29,15 +29,21 @@ export class ScannerPage {
     this.viewCtrl.dismiss();
   }
 
+  // API endpoint to make the same call than the real scanner would do
   makeTransaction() {
+    // make sure inputs aren't blank
     if (this.amount && this.retailer) {
+
+      // clear error message
       this.error_message = "";
 
+      // display loading
       let loading = this.loadingCtrl.create({
         content: 'Please wait...'
       });
       loading.present();
 
+      // make the post to the endpoint
       this.httpClient.post(this.config.getAPILocation() + '/' + this.iam.getCurrentUser() + "/" + this.max, {deduct: this.amount, retailer: this.retailer}, {responseType: 'text'}).subscribe(data => {
         loading.dismiss();
         this.close();
