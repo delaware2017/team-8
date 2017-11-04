@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -16,6 +17,7 @@ import { HomePage } from '../pages/home/home';
 import { LocationsPage } from '../pages/locations/locations';
 
 import { IAMService } from '../services/iam.service';
+import { ConfigService } from '../services/config.service';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,7 @@ import { IAMService } from '../services/iam.service';
   imports: [
     BrowserModule,
     QRCodeModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp, {
       mode: 'md'
     }),
@@ -49,6 +52,7 @@ import { IAMService } from '../services/iam.service';
   ],
   providers: [
     IAMService,
+    ConfigService,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}

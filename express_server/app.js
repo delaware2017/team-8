@@ -62,7 +62,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen(3001, function () { // TODO: Change port back
+app.listen(3000, function () { // TODO: Change port back
   console.log('Express listening at', 3000);
 });
 
