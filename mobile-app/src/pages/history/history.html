@@ -6,5 +6,9 @@
 </ion-header>
 
 <ion-content padding>
-  past transactions
+  <ion-card *ngFor="let transaction of transactions">
+    <ion-card-header>{{ transaction.retailer }}</ion-card-header>
+    <ion-card-content><span class="date">{{ formatDate(transaction.date) }}</span><span class="amount" [ngClass]="{'negative': transaction.positive == false, 'positive': transaction.positive == true}"><span *ngIf="transaction.positive == true">+</span><span *ngIf="transaction.positive == false">-</span>{{ getBalanceFormatted(transaction.amount) }}</span></ion-card-content>
+  </ion-card>
+  <!-- <p *ngIf="transactions.length == 0">No past transactions</p> -->
 </ion-content>

@@ -17,6 +17,7 @@ export class ScannerPage {
   error_message: string = "";
 
   amount: string = "";
+  retailer: string = "";
 
   constructor(private viewCtrl: ViewController, private httpClient: HttpClient, private config: ConfigService, private loadingCtrl: LoadingController, private iam: IAMService, private navParams: NavParams) {}
 
@@ -29,7 +30,7 @@ export class ScannerPage {
   }
 
   makeTransaction() {
-    if (this.amount) {
+    if (this.amount && this.retailer) {
       this.error_message = "";
 
       let loading = this.loadingCtrl.create({
@@ -37,7 +38,7 @@ export class ScannerPage {
       });
       loading.present();
 
-      this.httpClient.post(this.config.getAPILocation() + '/' + this.iam.getCurrentUser() + "/" + this.max, {deduct: this.amount}, {responseType: 'text'}).subscribe(data => {
+      this.httpClient.post(this.config.getAPILocation() + '/' + this.iam.getCurrentUser() + "/" + this.max, {deduct: this.amount, retailer: this.retailer}, {responseType: 'text'}).subscribe(data => {
         loading.dismiss();
         this.close();
       });

@@ -11,6 +11,7 @@
 
 <ion-content padding>
   <input type="text" class="floating" [(ngModel)]="amount" placeholder="Amount ($)">
+  <input type="text" class="floating" [(ngModel)]="retailer" placeholder="Retailer name">
   <p class="error">{{ error_message }}</p>
   <button ion-button full (click)="makeTransaction()">Make Transaction</button>
 </ion-content>
