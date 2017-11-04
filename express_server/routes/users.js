@@ -17,7 +17,7 @@ router.post('/user/signup', function(req, res) {
       "code": code._id,
       "email": req.body.email,
       "numFamily": req.body.numFamily,
-      "balance": 0.00
+      "balance": '0'
     })
     console.log(newUser);
     newUser.save(function(err, newUser) {
