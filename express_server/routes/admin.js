@@ -5,6 +5,7 @@ var User = require('../models/user');
 var Code = require('../models/code');
 var async = require('async');
 
+//create acess codes for patient to use to sign up
 router.post('/accessCodes/create/:id', function(req, res) {
   Admin.findById(req.params.id, function(err, user) {
     console.log("found admin");
@@ -33,6 +34,7 @@ router.post('/accessCodes/create/:id', function(req, res) {
   })
 });
 
+//check that the access code is valid
 router.post('/accessCodes', function(req, res) {
   Code.findOne({code: req.body.code}, function(err, code) {
     if (err) {
@@ -50,6 +52,7 @@ router.post('/accessCodes', function(req, res) {
   })
 })
 
+//admin signup
 router.post('/asignup', (req, res) => {
   var admin = new Admin({
     "username": req.body.username,
@@ -62,6 +65,7 @@ router.post('/asignup', (req, res) => {
   });
 });
 
+//admin login
 router.post('/alogin', function(req, res) {
   console.log('admin login:');
   Admin.findOne({username: req.body.username}, function(err, admin) {

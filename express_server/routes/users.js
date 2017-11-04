@@ -7,6 +7,7 @@ var Transaction = require('../models/transaction');
 var Store = require('../models/store');
 var async = require('async');
 
+//user signup
 router.post('/user/signup', function(req, res) {
   Code.findOne({code: req.body.code}, function(err, code) {
     var newUser = new User({
@@ -41,6 +42,7 @@ router.post('/user/signup', function(req, res) {
   })
 })
 
+//user login
 router.post('/login', function(req, res) {
   console.log(req.body);
   User.findOne({username: req.body.username}, function(err, user) {
@@ -59,6 +61,7 @@ router.post('/login', function(req, res) {
   })
 })
 
+//get the user's balance
 router.post('/balance', function(req, res) {
   User.findById(req.body.id, function(err, user) {
     if (err) throw err;
@@ -66,6 +69,7 @@ router.post('/balance', function(req, res) {
   })
 })
 
+//get the user's transactions and sort them
 router.post('/transactions', function(req, res) {
   User.findById(req.body.id, function(err, user) {
     if(err) throw err;
@@ -86,8 +90,10 @@ router.post('/transactions', function(req, res) {
       res.send(info);
     });
   })*/
+  })
 })
-})
+
+//add money to the user's balance
 router.post('/:id/add', function(req, res) {
   User.findById(req.params.id, function(err, user) {
     if(err) throw err;
@@ -106,6 +112,7 @@ router.post('/:id/add', function(req, res) {
   })
 })
 
+//deduct money from the user's balance given a max amount and deduction amount
 router.post('/:id/:max', function(req, res) {
   User.findById(req.params.id, function(err, user) {
     if(err) throw err;
@@ -139,6 +146,7 @@ router.post('/:id/:max', function(req, res) {
   })
 })
 
+//get the nearest stores
 router.post('/nearestStores', function(req, res) {
   Store.find({}, function(err, stores) {
     var info = [];

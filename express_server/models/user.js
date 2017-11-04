@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var bcrypt   = require('bcrypt-nodejs');
 
 // Define schema =====================================================================================================================================================================
 var userSchema = mongoose.Schema({
@@ -16,15 +15,6 @@ var userSchema = mongoose.Schema({
   transactions: [{type: mongoose.Schema.Types.ObjectId, ref: 'Transcation'}],
   plan: {type: Number}
 })
-
-// Define methods ====================================================================================================================================================================
-userSchema.methods.hashPassword = function(password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-};
-
-userSchema.methods.validatePassword = function(password) {
-    return bcrypt.compareSync(password, this.password);
-};
 
 // Export schema =====================================================================================================================================================================
 module.exports = mongoose.model('User', userSchema);
