@@ -5,6 +5,7 @@ var bcrypt   = require('bcrypt-nodejs');
 var adminSchema = mongoose.Schema({
   username: {type: String, required: true},
   password: {type: String, required: true},
+  accessCodes: [{type: mongoose.Schema.Types.ObjectId, ref: 'Code'}],
   listOfUsers: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 })
 

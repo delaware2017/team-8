@@ -12,6 +12,7 @@ var userSchema = mongoose.Schema({
   email: {type: String},
   numFamily: {type: Number},
   balance: {type: Number},
+  code: {type: mongoose.Schema.Types.ObjectId, ref: 'Code'},
   physician: {type: mongoose.Schema.Types.ObjectId, ref: 'Admin'},
   plan: {type: mongoose.Schema.Types.ObjectId, ref: 'Plan'}
 })
