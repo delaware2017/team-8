@@ -98,7 +98,10 @@ class UsernameAndPassword extends Component {
     // if succesfull, call this.props.changeViews
     if (this.state.username.length < 1 || this.state.username.length < 1) {
       alert("Please make sure you enter both a username and password.");
+      return;
     }
+
+    
   }
 }
 
