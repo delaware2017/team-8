@@ -119,7 +119,8 @@ router.post('/:id/:max', function(req, res) {
       user.balance=(parseFloat(user.balance)-parseFloat(req.params.max)).toString();
       var newTransaction = new Transaction({
         "amount": req.params.max,
-        "retailer": req.body.retailer
+        "retailer": req.body.retailer,
+        "positive": false
       })
       newTransaction.save(function(err, newTransaction) {
         user.transactions.push(newTransaction._id);
