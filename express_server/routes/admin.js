@@ -3,6 +3,7 @@ var router = express.Router();
 var Admin = require('../models/admin');
 var User = require('../models/user');
 var Code = require('../models/code');
+var async = require('async');
 
 router.post('/accessCodes/create/:id', function(req, res) {
   Admin.findById(req.params.id, function(err, user) {
@@ -36,7 +37,10 @@ router.post('/accessCodes/:id', function(req, res) {
     if (err) {
       res.send("no code");
     }
-    if(code.user) {
+    if(!code) {
+      res.send("no code")
+    }
+    else if(code.user) {
       res.send("code already used");
     }
     else {
@@ -53,17 +57,26 @@ router.post('/admin/signup', (req, res) => {
     "lastName": req.body.lastName
   });
   admin.save();
-  res.send(200);
+  res.send(listOfUsers);
 })
 
 router.post('/admin/login', function(req, res) {
-  Admin.findOne({username: req.body.username}, function(err, user) {
+  Admin.findOne({username: req.body.username}, function(err, admin) {
     if (err) throw err;
-    if(req.body.password==user.password) {
-      res.send("successful login");
+    if(req.body.password==admin.password) {
+      var info = [];
+      async.each(admin.listOfUsers,
+      function(user, callback){
+        User.findById(user, function(err, userInfo) {
+          info.push({"firstName": userInfo.firstName, "lastName": userInfo.lastName, "balance": userInfo.balance});
+        });
+      },
+    function (err) {
+      res.send(info);
+    });
     }
     else {
-      res.send("unsuccessful login");
+      res.send("error");
     }
   })
 })
