@@ -14,7 +14,7 @@ router.post('/user/signup', function(req, res) {
       "code": code._id,
       "email": req.body.email,
       "numFamily": req.body.numFamily,
-      "balance": 0
+      "balance": 0.00
     })
     console.log(newUser);
     newUser.save(function(err, newUser) {
@@ -51,9 +51,6 @@ router.post('/login', function(req, res) {
     }
   })
 })
-router.post('/update', function(req, res) {
-
-})
 
 router.post('/balance', function(req, res) {
   User.findById(req.body.id, function(err, user) {
@@ -62,8 +59,29 @@ router.post('/balance', function(req, res) {
   })
 })
 
-router.post('/:id/:balance', function(req, res) {
+router.post('/:id/add', function(req, res) {
+  User.findById(req.params.id, function(err, user) {
+    if(err) throw err;
+    user.balance=(parseFloat(user.balance)+parseFloat(req.body.add)).toString();
+    user.save();
+    res.send(user.balance);
+  })
+})
 
+router.post('/:id/:max', function(req, res) {
+  User.findById(req.params.id, function(err, user) {
+    if(err) throw err;
+    if(parseFloat(req.params.max)>=parseFloat(req.body.deduct)) {
+      user.balance=(parseFloat(user.balance)-parseFloat(req.body.deduct)).toString();
+      user.save();
+      res.send('0');
+    }
+    else {
+      user.balance=(parseFloat(user.balance)-parseFloat(req.params.max)).toString();
+      user.save();
+      res.send((parseFloat(req.body.deduct)-parseFloat(req.params.max)).toString());
+    }
+  })
 })
 
 module.exports = router;
