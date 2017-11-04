@@ -38,6 +38,7 @@ export class LoginPage implements OnInit {
       this.httpClient.post(this.config.getAPILocation() + '/login', {username: this.username, password: this.password}, {responseType: 'text'}).subscribe(data => {
         loading.dismiss();
         if (data) {
+          data = data.substring(1, data.length - 1);
           this.iam.setCurrentUser(data);
           this.navCtrl.setRoot(TabsPage);
         } else {
