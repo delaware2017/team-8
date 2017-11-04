@@ -1,5 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { NavController, Slides } from 'ionic-angular';
+import { NavController, Slides, LoadingController } from 'ionic-angular';
+
+import { HomePage } from '../home/home';
 
 @Component({
   selector: 'page-login',
@@ -8,9 +10,25 @@ import { NavController, Slides } from 'ionic-angular';
 export class LoginPage implements OnInit {
   @ViewChild(Slides) slides: Slides;
 
-  constructor(public navCtrl: NavController) {}
+  username: string;
+  password: string;
+
+  constructor(private navCtrl: NavController, private loadingCtrl: LoadingController) {}
 
   ngOnInit() {
     this.slides.lockSwipes(true);
+  }
+
+  login() {
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+  
+    loading.present();
+  
+    setTimeout(() => {
+      this.navCtrl.setRoot(HomePage);
+      loading.dismiss();
+    }, 1000);
   }
 }

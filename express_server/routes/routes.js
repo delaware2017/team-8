@@ -12,11 +12,23 @@ module.exports = function(passport) {
   router.get('/home', function(req, res) {
     res.send("successful signup");
   })
-  router.post('/signup', passport.authenticate('local-register', {
-      successRedirect : '/home',
-      failureRedirect : '/signup'
-    })
-  );
+
+  router.post('/signup', (req, res) => {
+    var user = new User({
+      "username": req.body.username,
+      "password": req.body.password,
+      "firstName": req.body.firstName,
+      "lastName": req.body.lastName
+    });
+    user.save();
+    res.send(200);
+  })
+  
+  // router.post('/signup', passport.authenticate('local-register', {
+  //     successRedirect : '/home',
+  //     failureRedirect : '/signup'
+  //   })
+  // );
 
   // Retrieve login page
   router.get('/', function(req, res) {

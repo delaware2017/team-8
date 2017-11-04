@@ -23,7 +23,7 @@ passport.use('local-register', new LocalStrategy({
   passReqToCallback: true
 },
 function(req, username, password, done) {
-  console.log("Helo2");
+  console.log("Hello2");
   process.nextTick(function() {
     console.log("hello");
     Admin.findOne({'username' : username}, function(err, user) {
@@ -53,6 +53,7 @@ passport.use('local-login', new LocalStrategy({
     passReqToCallback : true // allows us to pass back the entire request to the callback
   },
 	function(req, username, password, done) {
+    console.log("Here.");
     // Asynchronous
     // User.findOne wont fire unless data is sent back
     process.nextTick(function() {
