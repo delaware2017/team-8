@@ -43,11 +43,14 @@ router.post('/login', function(req, res) {
   User.findOne({username: req.body.username}, function(err, user) {
     console.log(user);
     if (err) throw err;
-    if(req.body.password==user.password) {
-      res.send(user._id);
-    }
-    else {
-      res.send("unsuccessful login");
+    if (user) {
+      if(req.body.password==user.password) {
+        res.send(user._id);
+      } else {
+        res.send('');
+      }
+    } else {
+      res.send('');
     }
   })
 })
