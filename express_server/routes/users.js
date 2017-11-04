@@ -17,7 +17,7 @@ router.post('/user/signup', function(req, res) {
       "code": code._id,
       "email": req.body.email,
       "numFamily": req.body.numFamily,
-      "balance": 0.00
+      "balance": '0'
     })
     console.log(newUser);
     newUser.save(function(err, newUser) {
@@ -73,8 +73,10 @@ router.post('/transactions', function(req, res) {
     async.each(user.transactions,
     function(transaction, callback){
       Transaction.findById(transaction, function(err, transactionInfo) {
-        info.push({"amount": transactionInfo.amount, "retailer": transactionInfo.retailer, "date": transactionInfo.date, "positive": transactionInfo.positive});
-        callback();
+        if (transactionInfo) {
+          info.push({"amount": transactionInfo.amount, "retailer": transactionInfo.retailer, "date": transactionInfo.date, "positive": transactionInfo.positive});
+          callback();
+        }
       });
     },
     function (err) {
