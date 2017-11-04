@@ -128,9 +128,17 @@ class UsernameAndPassword extends Component {
         return;
       }
 
-      if (this.state.username==="dchang2" && this.state.password==="asdf") {
-        this.props.changeViews();
-      }
+        fetch('http://localhost:3001' + '/alogin', {
+        method: 'POST',
+        headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+        body: formBody
+      })
+      .then((res) => {
+        console.log("res: " + JSON.stringify(res));
+      })
   }
 }
 
