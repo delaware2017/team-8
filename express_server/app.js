@@ -16,21 +16,33 @@ var users = require('./routes/users');
 var routes = require('./routes/routes');
 var admin = require('./routes/admin');
 var mongoose = require('mongoose');
-
+var async = require('async');
 mongoose.connect("mongodb://dchang2:asdf@ds147265.mlab.com:47265/team-8");
 var app = express();
 var router = express.Router();
 
 var User = require('./models/user');
-setInterval(automaticBalance, 60000);
+var Transaction = require('./models/transaction');
+setInterval(automaticBalance, 6000);
 function automaticBalance() {
   User.find({}, function(err, users) {
     if(err) throw err;
-    for(var i=0; i<users.length; i++) {
-      users[i].balance=(parseFloat(users[i].balance)+users[i].numFamily).toString();
-      console.log(users[i].balance);
-      users[i].save();
-    }
+
+    async.each(users,
+    function(user, callback){
+      var newTransaction = new Transaction({
+          "amount": user.numFamily,
+          "retailer": "Daily",
+          "positive": true
+        })
+        newTransaction.save(function(err, transactionInfo) {
+          user.transactions.push(newTransaction._id);
+          user.balance=(parseFloat(user.balance)+user.numFamily).toString();
+          user.save();
+          console.log(user);
+        })
+    })
+
   })
 }
 // view engine setup
