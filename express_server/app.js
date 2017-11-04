@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var key = require('./secret/key.json');
-var session = require('express-session')
+var session = require('express-session');
 var passport = require('./config/passport');
 var cookieParser = require('cookie-parser');
 

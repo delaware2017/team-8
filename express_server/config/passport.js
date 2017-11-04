@@ -1,7 +1,7 @@
 var passport = require('passport');
 var LocalStrategy   = require('passport-local').Strategy;
 var User = require('../models/user');
-var Group = require('../models/admin');
+var Admin = require('../models/admin');
 //Passport session setup ============================================================================================================================================================
 
 //Serialization
@@ -11,7 +11,7 @@ passport.serializeUser(function(user, done) {
 
 //Deserialization
 passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
+  Admin.findById(id, function(err, user) {
     done(err, user);
   });
 });
@@ -27,7 +27,8 @@ function(req, username, password, done) {
   process.nextTick(function() {
     console.log("hello");
     Admin.findOne({'username' : username}, function(err, user) {
-      if(err) return done(err);
+      if(err)
+        return done(err);
       if(user) {
         return done(null, false)
       } else if(req.body.password != req.body.confirmPassword) {

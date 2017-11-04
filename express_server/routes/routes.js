@@ -7,10 +7,10 @@ module.exports = function(passport) {
 
   // Retrieve registration page
   router.get('/signup', function(req, res) {
-    res.render('index');
+    res.send("signup")
   });
   router.get('/home', function(req, res) {
-    res.render('error');
+    res.send("successful signup");
   })
   router.post('/signup', passport.authenticate('local-register', {
       successRedirect : '/home',
