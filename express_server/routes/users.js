@@ -73,8 +73,10 @@ router.post('/transactions', function(req, res) {
     async.each(user.transactions,
     function(transaction, callback){
       Transaction.findById(transaction, function(err, transactionInfo) {
-        info.push({"amount": transactionInfo.amount, "retailer": transactionInfo.retailer, "date": transactionInfo.date, "positive": transactionInfo.positive});
-        callback();
+        if (transactionInfo) {
+          info.push({"amount": transactionInfo.amount, "retailer": transactionInfo.retailer, "date": transactionInfo.date, "positive": transactionInfo.positive});
+          callback();
+        }
       });
     },
     function (err) {
