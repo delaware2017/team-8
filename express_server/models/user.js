@@ -13,7 +13,7 @@ var userSchema = mongoose.Schema({
   numFamily: {type: Number},
   balance: {type: String},
   code: {type: mongoose.Schema.Types.ObjectId, ref: 'Code'},
-  transactions: {type: mongoose.Schema.Types.ObjectId, ref: 'Transcation'},
+  transactions: [{type: mongoose.Schema.Types.ObjectId, ref: 'Transcation'}],
   plan: {type: Number}
 })
 

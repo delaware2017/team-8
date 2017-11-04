@@ -3,6 +3,7 @@ var router = express.Router();
 var Admin = require('../models/admin');
 var User = require('../models/user');
 var Code = require('../models/code');
+var Transaction = require('../models/transaction');
 
 router.post('/user/signup', function(req, res) {
   Code.findOne({code: req.body.code}, function(err, code) {
@@ -73,12 +74,26 @@ router.post('/:id/:max', function(req, res) {
     if(err) throw err;
     if(parseFloat(req.params.max)>=parseFloat(req.body.deduct)) {
       user.balance=(parseFloat(user.balance)-parseFloat(req.body.deduct)).toString();
-      user.save();
+      var newTransaction = new Transaction({
+        "amount": req.body.deduct,
+        "retailer": "Target"
+      })
+      newTransaction.save(function(err, newTransaction) {
+        user.transactions.push(newTransaction._id);
+        user.save();
+      })
       res.send('0');
     }
     else {
       user.balance=(parseFloat(user.balance)-parseFloat(req.params.max)).toString();
-      user.save();
+      var newTransaction = new Transaction({
+        "amount": req.params.max,
+        "retailer": "Target"
+      })
+      newTransaction.save(function(err, newTransaction) {
+        user.transactions.push(newTransaction._id);
+        user.save();
+      })
       res.send((parseFloat(req.body.deduct)-parseFloat(req.params.max)).toString());
     }
   })

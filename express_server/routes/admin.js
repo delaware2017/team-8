@@ -18,7 +18,7 @@ router.post('/accessCodes/create/:id', function(req, res) {
       code = Math.floor(Math.random()*9000) + 1000;
       var newCode = new Code({
         code: code,
-        admin: req.params.id
+        admin: req.params.id,
         plan: req.body.plan
       })
       console.log(newCode);
