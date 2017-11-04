@@ -1,12 +1,13 @@
 var mongoose = require('mongoose');
 
 // Define schema =====================================================================================================================================================================
-var transactionSchema = mongoose.Schema({
-  amount: {type: String},
-  retailer: {type: String},
-  date: {type: Date, default: Date.now()},
-  positive: {type: Boolean}
+var storeSchema = mongoose.Schema({
+  name: {type: String},
+  time: {type: String},
+  distance: {type: String},
+  latitude: {type: String},
+  longitude: {type: String}
 })
 
 // Export schema =====================================================================================================================================================================
-module.exports = mongoose.model('Transaction', transactionSchema);
+module.exports = mongoose.model('Store', storeSchema);

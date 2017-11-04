@@ -4,6 +4,7 @@ var Admin = require('../models/admin');
 var User = require('../models/user');
 var Code = require('../models/code');
 var Transaction = require('../models/transaction');
+var Store = require('../models/store');
 var async = require('async');
 
 router.post('/user/signup', function(req, res) {
@@ -50,10 +51,10 @@ router.post('/login', function(req, res) {
         res.send(user._id);
       }
       else {
-        res.send("unsuccessful login");
+        res.send("");
       }
     } else {
-      res.send("unsuccessful login");
+      res.send("");
     }
   })
 })
@@ -72,7 +73,7 @@ router.post('/transactions', function(req, res) {
     async.each(user.transactions,
     function(transaction, callback){
       Transaction.findById(transaction, function(err, transactionInfo) {
-        info.push({"amount": transactionInfo.amount, "retailer": transactionInfo.retailer, "date": transactionInfo.date});
+        info.push({"amount": transactionInfo.amount, "retailer": transactionInfo.retailer, "date": transactionInfo.date, "positive": transactionInfo.positive});
         callback();
       });
     },
@@ -85,8 +86,16 @@ router.post('/:id/add', function(req, res) {
   User.findById(req.params.id, function(err, user) {
     if(err) throw err;
     user.balance=(parseFloat(user.balance)+parseFloat(req.body.add)).toString();
-    user.save();
-    res.send(user.balance);
+    var newTransaction = new Transaction({
+      "amount": req.body.add,
+      "retailer": "Physician",
+      "positive": true
+    })
+    newTransaction.save(function(err, newTransaction) {
+      user.transactions.push(newTransaction._id);
+      user.save();
+      res.send(user.balance);
+    })
   })
 })
 
@@ -97,7 +106,8 @@ router.post('/:id/:max', function(req, res) {
       user.balance=(parseFloat(user.balance)-parseFloat(req.body.deduct)).toString();
       var newTransaction = new Transaction({
         "amount": req.body.deduct,
-        "retailer": "Target"
+        "retailer": req.body.retailer,
+        "positive": false
       })
       newTransaction.save(function(err, newTransaction) {
         user.transactions.push(newTransaction._id);
@@ -109,7 +119,8 @@ router.post('/:id/:max', function(req, res) {
       user.balance=(parseFloat(user.balance)-parseFloat(req.params.max)).toString();
       var newTransaction = new Transaction({
         "amount": req.params.max,
-        "retailer": "Target"
+        "retailer": req.body.retailer,
+        "positive": false
       })
       newTransaction.save(function(err, newTransaction) {
         user.transactions.push(newTransaction._id);
@@ -117,6 +128,17 @@ router.post('/:id/:max', function(req, res) {
       })
       res.send((parseFloat(req.body.deduct)-parseFloat(req.params.max)).toString());
     }
+  })
+})
+
+router.post('/nearestStores', function(req, res) {
+  Store.find({}, function(err, stores) {
+    var info = [];
+    console.log(stores);
+    for(var i=0; i<stores.length; i++) {
+      info.push({"name": stores[i].name, "time": stores[i].time, "distance": stores[i].distance, "latitude": stores[i].latitude, "longitude": stores[i].longitude});
+    }
+    res.send(info);
   })
 })
 
