@@ -8,6 +8,7 @@ var key = require('./secret/key.json');
 var session = require('express-session');
 var passport = require('./config/passport');
 var cookieParser = require('cookie-parser');
+var cors = require('cors');
 
 
 var index = require('./routes/index');
@@ -33,6 +34,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cors({origin: 'http://localhost:8100'}));
 
 app.use(routes(passport))
 app.use(users)
