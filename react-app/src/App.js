@@ -6,6 +6,13 @@ import TextField from 'material-ui/TextField';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class App extends Component {
+  constructor() {
+    super();
+    this.changeViews = this.changeViews.bind(this);
+    this.state = {
+      showMainPage: true
+    }
+  }
   render() {
     return (
       <div className="App">
@@ -14,10 +21,17 @@ class App extends Component {
             <h1 className="App-title">Welcome to _name_</h1>
           </header>
         <MuiThemeProvider>
-          <UsernameAndPassword/>
+          <UsernameAndPassword changeViews={this.changeViews}/>
         </MuiThemeProvider>
       </div>
     );
+  }
+
+  changeViews(event) {
+    // Go from main page to admin page.
+    this.setState({
+      showMainPage: !this.state.showMainPage
+    })
   }
 }
 
@@ -60,7 +74,7 @@ class UsernameAndPassword extends Component {
           value={this.state.password}
           onChange={this.handleChangePassword}
         /> <br/>
-        <RaisedButton label="Log in" style={style}/>
+        <RaisedButton label="Log in" style={style} onClick={this.props.changeViews}/>
       </div>
     )
   }
