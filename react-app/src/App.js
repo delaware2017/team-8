@@ -9,14 +9,12 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <MuiThemeProvider>
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
             <h1 className="App-title">Welcome to _name_</h1>
           </header>
-          <p className="App-intro">
-            <UsernameAndPassword/>
-          </p>
+        <MuiThemeProvider>
+          <UsernameAndPassword/>
         </MuiThemeProvider>
       </div>
     );
@@ -30,18 +28,38 @@ class UsernameAndPassword extends Component {
       username: "",
       password: ""
     }
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChangePassword(event) {
+    console.log("handle changed called: " + event.target.value);
+    this.setState({
+      password: event.target.value
+    })
+  }
+
+  handleChangeUsername(event) {
+    this.setState({
+      username: event.target.value
+    })
   }
 
   render() {
     return (
       <div>
         <TextField
-          hintText=""
-        /> < br/>
+          hintText="Please enter your username"
+          floatingLabelText="Username"
+          value={this.state.username}
+          onChange={this.handleChange}
+        /> <br/>
         <TextField
           hintText="Please enter your password"
+          floatingLabelText="Password"
+          value={this.state.password}
+          onChange={this.handleChangePassword}
         /> <br/>
-        <RaisedButton label="default" style={style}/>
+        <RaisedButton label="Log in" style={style}/>
       </div>
     )
   }
