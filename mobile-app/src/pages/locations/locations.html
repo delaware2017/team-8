@@ -9,8 +9,8 @@
 
   <ion-card *ngFor="let location of locations">
       
-    <agm-map [latitude]="location.lat" [longitude]="location.lon">
-      <agm-marker [latitude]="location.lat" [longitude]="location.lon"></agm-marker>
+    <agm-map [latitude]="location.latitude" [longitude]="location.longitude" [zoom]="16">
+      <agm-marker [latitude]="location.latitude" [longitude]="location.longitude"></agm-marker>
     </agm-map>
   
     <ion-item>
@@ -20,8 +20,8 @@
     </ion-item>
   
     <ion-item>
-      <span item-left>{{ location.time_away }}</span>
-      <span item-left>({{ location.distance_away }})</span>
+      <span item-left>{{ location.time }} mins</span>
+      <span item-left>({{ location.distance }}) miles</span>
       <button ion-button icon-left clear item-end>
         <ion-icon name="navigate"></ion-icon>
         Start

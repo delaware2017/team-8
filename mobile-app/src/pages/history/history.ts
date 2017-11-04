@@ -13,37 +13,39 @@ import { IAMService } from '../../services/iam.service';
 })
 export class HistoryPage implements OnInit {
 
-  transactions;
-
-  key_val = "retailer";
-  ascending = true;
+  transactions; // the main list of transactions
 
   constructor(private httpClient: HttpClient, private config: ConfigService, private iam: IAMService) {}
 
   ngOnInit() {
-    setInterval(() => {
+    // download initial transaction history
     if (this.iam.getCurrentUser()) {
       this.httpClient.post(this.config.getAPILocation() + '/transactions', {id: this.iam.getCurrentUser()}).subscribe((data:any) => {
         if (data) {
           this.transactions = data;
-          for (let transaction of this.transactions) {
-            transaction.date = moment(transaction.date).toDate();
-          }
-          this.transactions.sort(this.compare);
         }
       });
-    }}, 1000);
+    }
+
+    // redownload data every second to keep it up to date
+    setInterval(() => {
+      if (this.iam.getCurrentUser()) {
+        this.httpClient.post(this.config.getAPILocation() + '/transactions', {id: this.iam.getCurrentUser()}).subscribe((data:any) => {
+          if (data) {
+            this.transactions = data;
+          }
+        });
+      }
+    }, 1000);
   }
 
-  compare(a,b) {
-    return <any>new Date(b.date) - <any>new Date(a.date);
-  }
-
+  // formats a number for display as currency
   getBalanceFormatted(balance) {
     return "$" + Number(balance).toFixed(2);
   }
 
+  // formats a date to be pretty
   formatDate(date) {
-    return moment(date).subtract(4, 'hours').format("D MMMM YYYY, h:mm a");
+    return moment(date).format("D MMMM YYYY, h:mm a");
   }
 }

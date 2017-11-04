@@ -25,6 +25,7 @@ export class HomePage implements OnInit {
   constructor(private config: ConfigService, private iam: IAMService, private httpClient: HttpClient, private modalCtrl: ModalController) {}
 
   ngOnInit() {
+    // download the users balance
     if (this.iam.getCurrentUser()) {
       this.httpClient.post(this.config.getAPILocation() + '/balance', {id: this.iam.getCurrentUser()}, {responseType: 'text'}).subscribe(data => {
         if (data) {
@@ -33,6 +34,7 @@ export class HomePage implements OnInit {
       });
     }
 
+    // keep downloading the users balance every second so it is up to date
     this.balance_download_interval = setInterval(() => {
       if (this.iam.getCurrentUser()) {
         this.httpClient.post(this.config.getAPILocation() + '/balance', {id: this.iam.getCurrentUser()}, {responseType: 'text'}).subscribe(data => {
@@ -44,19 +46,23 @@ export class HomePage implements OnInit {
     }, 1000);
   }
 
+  // formats a number for display as currency
   getBalanceFormatted() {
     return "$" + this.balance.toFixed(2);
   }
 
+  // called when user clicks new transaction button
   newTransaction() {
     this.max_amount = "";
     this.transaction_open = true;
   }
 
+  // called when user clicks finish transaction button
   finishTransaction() {
     this.transaction_open = false;
   }
 
+  // opens the fake scanner modal
   openScanner() {
     if (this.max_amount) {
       let modal = this.modalCtrl.create(ScannerPage, {max: this.max_amount});
