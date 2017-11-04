@@ -11,10 +11,10 @@ var userSchema = mongoose.Schema({
   phone: {type: String},
   email: {type: String},
   numFamily: {type: Number},
-  balance: {type: Number},
+  balance: {type: String},
   code: {type: mongoose.Schema.Types.ObjectId, ref: 'Code'},
-  physician: {type: mongoose.Schema.Types.ObjectId, ref: 'Admin'},
-  plan: {type: mongoose.Schema.Types.ObjectId, ref: 'Plan'}
+  transactions: {type: mongoose.Schema.Types.ObjectId, ref: 'Transcation'},
+  plan: {type: Number}
 })
 
 // Define methods ====================================================================================================================================================================

@@ -43,15 +43,22 @@ router.post('/login', function(req, res) {
   User.findOne({username: req.body.username}, function(err, user) {
     console.log(user);
     if (err) throw err;
-    if (user) {
-      if(req.body.password==user.password) {
-        res.send(user._id);
-      } else {
-        res.send('');
-      }
-    } else {
-      res.send('');
+    if(req.body.password==user.password) {
+      res.send(user._id);
     }
+    else {
+      res.send("unsuccessful login");
+    }
+  })
+})
+router.post('/update', function(req, res) {
+
+})
+
+router.post('/balance', function(req, res) {
+  User.findById(req.body.id, function(err, user) {
+    if (err) throw err;
+    res.send(user.balance);
   })
 })
 
