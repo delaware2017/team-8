@@ -47,7 +47,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors({origin: 'http://localhost:8100'}));
-
 app.use(routes(passport))
 app.use(users)
 app.use(index)
