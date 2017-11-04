@@ -39,11 +39,10 @@ router.post('/user/signup', function(req, res) {
 })
 
 router.post('/login', function(req, res) {
-  console.log(req.body);
+  // console.log(req.body + " req body username: " + req.body.username);
   User.findOne({username: req.body.username}, function(err, user) {
     console.log(user);
-    if (err) throw err;
-    if(req.body.password==user.password) {
+    if(req.body.password === user.password) {
       res.send("successful login");
     }
     else {
