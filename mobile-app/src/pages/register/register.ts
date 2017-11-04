@@ -1,7 +1,12 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { NavController, Slides, LoadingController } from 'ionic-angular';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Http, Headers, Response, URLSearchParams } from '@angular/http';
+import { NavController, Slides, LoadingController, AlertController } from 'ionic-angular';
 
 import { TabsPage } from '../tabs/tabs';
+
+import { ConfigService } from '../../services/config.service';
+import { IAMService } from '../../services/iam.service';
 
 @Component({
   selector: 'page-register',
@@ -10,15 +15,19 @@ import { TabsPage } from '../tabs/tabs';
 export class RegisterPage implements OnInit {
   @ViewChild(Slides) slides: Slides;
 
-  first_name: String = "";
-  last_name: String = "";
-  email_address: String = "";
-  phone_number: String = "";
-  family_members: String = "";
+  access_code: string = "";
 
-  error_message: String = "";
+  firstName: string = "";
+  lastName: string = "";
+  username: string = "";
+  password_1: string = "";
+  password_2: string = "";
+  email: string = "";
+  numFamily: string = "";
 
-  constructor(private navCtrl: NavController, private loadingCtrl: LoadingController) {}
+  error_message: string = "";
+
+  constructor(private navCtrl: NavController, private loadingCtrl: LoadingController, private httpClient: HttpClient, private alertCtrl: AlertController, private config: ConfigService, private iam: IAMService) {}
 
   ngOnInit() {
     this.slides.lockSwipes(true);
@@ -28,31 +37,84 @@ export class RegisterPage implements OnInit {
     this.slides.lockSwipes(false);
 
     if (this.slides.getActiveIndex() == 0) {
-      // do necessary calls to validate access code and then continue
-      let loading = this.loadingCtrl.create({
-        content: 'Please wait...'
-      });
-    
-      loading.present();
-    
-      setTimeout(() => {
-        this.slides.slideNext();
-        this.slides.lockSwipes(true);
-        loading.dismiss();
-      }, 1000);
+      if (this.access_code) {
+        this.error_message = "";
+        let loading = this.loadingCtrl.create({
+          content: 'Please wait...'
+        });
+        loading.present();
+        
+        this.httpClient.post(this.config.getAPILocation() + '/accessCodes/' + this.access_code, {}, {responseType: 'text'}).subscribe(data => {
+          loading.dismiss();
+          if (data == "valid code") {
+            this.slides.slideNext();
+          } else {
+            let alert = this.alertCtrl.create({
+              title: 'Error',
+              subTitle: 'Your access code was not valid.',
+              buttons: ['OK']
+            });
+            alert.present();
+          }
+          this.slides.lockSwipes(true);
+        });
+      } else {
+        this.error_message = "Please fill out all fields";
+      }
     }
   }
 
   signUp() {
-    let loading = this.loadingCtrl.create({
-      content: 'Please wait...'
-    });
+    if (this.firstName && this.lastName && this.username && this.password_1 && this.password_2 && this.email && this.numFamily) {
+      // all fields were filled out
+      if (this.password_1 == this.password_2) {
+        // password confirmations were the same
+
+        this.error_message = "";
+
+        let loading = this.loadingCtrl.create({
+          content: 'Please wait...'
+        });
+        loading.present();
   
-    loading.present();
+        var headers = new HttpHeaders();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
   
-    setTimeout(() => {
-      this.navCtrl.setRoot(TabsPage);
-      loading.dismiss();
-    }, 1000);
+        let urlSearchParams = new URLSearchParams();
+  
+        urlSearchParams.append('firstName', this.firstName);
+        urlSearchParams.append('lastName', this.lastName);
+        urlSearchParams.append('username', this.username);
+        urlSearchParams.append('password', this.password_1);
+        urlSearchParams.append('email', this.email);
+        urlSearchParams.append('numFamily', this.numFamily);
+        urlSearchParams.append('code', this.access_code);
+
+        let body = urlSearchParams.toString()
+  
+        this.httpClient.post(this.config.getAPILocation() + "/user/signup", body, {responseType: 'text', headers: headers}).subscribe(data => {
+          loading.dismiss();
+          if (data) {
+            // successful user registration, data equals user id
+            this.iam.setCurrentUser(data);
+  
+            this.navCtrl.setRoot(TabsPage);
+          } else {
+            let alert = this.alertCtrl.create({
+              title: 'Error',
+              subTitle: 'Sign up failed.',
+              buttons: ['OK']
+            });
+            alert.present();
+          }
+        });
+
+      } else {
+        this.error_message = "Passwords do not match";
+      }
+    } else {
+      // all fields were not filled out
+      this.error_message = "Please fill out all fields";
+    }
   }
 }
