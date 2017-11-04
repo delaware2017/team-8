@@ -1,22 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Http, Headers, Response, URLSearchParams } from '@angular/http';
+
+import { ConfigService } from '../../services/config.service';
+import { IAMService } from '../../services/iam.service';
+
 
 @Component({
   selector: 'page-locations',
   templateUrl: 'locations.html'
 })
-export class LocationsPage {
+export class LocationsPage implements OnInit {
 
-  locations = [
-    {
-      name: "Clark's Farm Stand",
-      address: "11 N. Way St, Madison, WI 53703",
-      time_away: "10 mins",
-      distance_away: "2.6 miles",
-      lat: 39.277543,
-      lon: -74.579229
-    }
-  ];
+  locations;
 
-  constructor() {}
+  constructor(private httpClient: HttpClient, private config: ConfigService, private iam: IAMService) {}
+
+  ngOnInit() {
+    this.httpClient.post(this.config.getAPILocation() + '/nearestStores', {}).subscribe(data => {
+      if (data) {
+        this.locations = data;
+        console.log(this.locations);
+      }
+    });
+  }
 
 }
