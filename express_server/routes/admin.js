@@ -19,6 +19,7 @@ router.post('/accessCodes/create/:id', function(req, res) {
       var newCode = new Code({
         code: code,
         admin: req.params.id
+        plan: req.body.plan
       })
       console.log(newCode);
       newCode.save(function(err, newCode) {
