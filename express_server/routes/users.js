@@ -12,6 +12,8 @@ router.post('/user/signup', function(req, res) {
       "firstName": req.body.firstName,
       "lastName": req.body.lastName,
       "code": code._id,
+      "email": req.body.email,
+      "numFamily": req.body.numFamily,
       "balance": 0
     })
     console.log(newUser);
@@ -29,7 +31,7 @@ router.post('/user/signup', function(req, res) {
           code.save(function(err, updatedCode) {
             console.log("here4");
             if (err) throw err;
-            res.send("successful signup")
+            res.send(newUser._id);
           })
       })
     })
@@ -48,6 +50,10 @@ router.post('/login', function(req, res) {
       res.send("unsuccessful login");
     }
   })
+})
+
+router.post('/:id/:balance', function(req, res) {
+  
 })
 
 module.exports = router;
