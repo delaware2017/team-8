@@ -71,7 +71,7 @@ router.post('/transactions', function(req, res) {
     if(err) throw err;
     Transaction.find({'_id': user.transactions}, function(err, docs) {
       res.send(docs);
-    });
+    }).sort({date: -1});
     /*var info = [];
     async.each(user.transactions,
     function(transaction, callback){

@@ -1,4 +1,4 @@
-//Configuration
+//Configuration=================================================================================
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -21,6 +21,8 @@ var router = express.Router();
 
 var User = require('./models/user');
 var Transaction = require('./models/transaction');
+
+//Function to add balance of $1/day/family member
 setInterval(automaticBalance, 60000);
 function automaticBalance() {
   User.find({}, function(err, users) {
