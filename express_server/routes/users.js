@@ -50,10 +50,10 @@ router.post('/login', function(req, res) {
         res.send(user._id);
       }
       else {
-        res.send("unsuccessful login");
+        res.send("");
       }
     } else {
-      res.send("unsuccessful login");
+      res.send("");
     }
   })
 })
