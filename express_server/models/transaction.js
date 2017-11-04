@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var transactionSchema = mongoose.Schema({
   amount: {type: String},
   retailer: {type: String},
-  date: {type: Date, default: Date.now()},
+  date: {type: Date},
   positive: {type: Boolean}
 })
 
