@@ -28,7 +28,8 @@ class UsernameAndPassword extends Component {
       username: "",
       password: ""
     }
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChangeUsername = this.handleChangeUsername.bind(this);
+    this.handleChangePassword = this.handleChangePassword.bind(this);
   }
 
   handleChangePassword(event) {
@@ -51,7 +52,7 @@ class UsernameAndPassword extends Component {
           hintText="Please enter your username"
           floatingLabelText="Username"
           value={this.state.username}
-          onChange={this.handleChange}
+          onChange={this.handleChangeUsername}
         /> <br/>
         <TextField
           hintText="Please enter your password"
