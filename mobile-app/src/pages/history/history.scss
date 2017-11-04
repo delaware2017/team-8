@@ -1,3 +1,21 @@
 page-history {
-  
+  .date {
+    color: gray;
+  }
+
+  .amount {
+    float: right;
+  }
+
+  .amount.positive {
+    color: green;
+  }
+
+  .amount.negative {
+    color: red;
+  }
+
+  ion-card {
+    margin-top: 20px !important;
+  }
 }
