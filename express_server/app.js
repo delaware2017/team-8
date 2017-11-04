@@ -10,7 +10,6 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var cors = require('cors');
 
-var index = require('./routes/index');
 var users = require('./routes/users');
 var admin = require('./routes/admin');
 var mongoose = require('mongoose');
@@ -59,7 +58,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors({origin: 'http://localhost:8100'}));
 app.use(users)
-app.use(index)
 app.use(admin)
 app.use(users)
 
