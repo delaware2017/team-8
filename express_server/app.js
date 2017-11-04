@@ -23,7 +23,7 @@ var router = express.Router();
 
 var User = require('./models/user');
 var Transaction = require('./models/transaction');
-setInterval(automaticBalance, 6000);
+setInterval(automaticBalance, 60000);
 function automaticBalance() {
   User.find({}, function(err, users) {
     if(err) throw err;
