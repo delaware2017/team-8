@@ -1,3 +1,4 @@
+//Configuration
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -9,7 +10,6 @@ var session = require('express-session');
 var passport = require('./config/passport');
 var cookieParser = require('cookie-parser');
 var cors = require('cors');
-
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -33,7 +33,8 @@ function automaticBalance() {
       var newTransaction = new Transaction({
           "amount": user.numFamily,
           "retailer": "Daily",
-          "positive": true
+          "positive": true,
+          "date": Date.now()
         })
         newTransaction.save(function(err, transactionInfo) {
           user.transactions.push(newTransaction._id);
