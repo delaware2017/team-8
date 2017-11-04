@@ -23,7 +23,7 @@ passport.use('local-register', new LocalStrategy({
   passReqToCallback: true
 },
 function(req, username, password, done) {
-  console.log("Helo2");
+  console.log("Hello2");
   process.nextTick(function() {
     console.log("hello");
     Admin.findOne({'username' : username}, function(err, user) {
