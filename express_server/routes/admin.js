@@ -4,3 +4,5 @@ var Admin = require('../models/admin');
 var User = require('../models/user');
 
 //get admin info and render page
+
+module.exports = router;
