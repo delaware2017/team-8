@@ -6,20 +6,32 @@ import TextField from 'material-ui/TextField';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class App extends Component {
+  constructor() {
+    super();
+    this.changeViews = this.changeViews.bind(this);
+    this.state = {
+      showMainPage: true
+    }
+  }
   render() {
     return (
       <div className="App">
-        <MuiThemeProvider>
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
             <h1 className="App-title">Welcome to _name_</h1>
           </header>
-          <p className="App-intro">
-            <UsernameAndPassword/>
-          </p>
+        <MuiThemeProvider>
+          <UsernameAndPassword changeViews={this.changeViews}/>
         </MuiThemeProvider>
       </div>
     );
+  }
+
+  changeViews(event) {
+    // Go from main page to admin page.
+    this.setState({
+      showMainPage: !this.state.showMainPage
+    })
   }
 }
 
@@ -30,18 +42,39 @@ class UsernameAndPassword extends Component {
       username: "",
       password: ""
     }
+    this.handleChangeUsername = this.handleChangeUsername.bind(this);
+    this.handleChangePassword = this.handleChangePassword.bind(this);
+  }
+
+  handleChangePassword(event) {
+    console.log("handle changed called: " + event.target.value);
+    this.setState({
+      password: event.target.value
+    })
+  }
+
+  handleChangeUsername(event) {
+    this.setState({
+      username: event.target.value
+    })
   }
 
   render() {
     return (
       <div>
         <TextField
-          hintText=""
-        /> < br/>
+          hintText="Please enter your username"
+          floatingLabelText="Username"
+          value={this.state.username}
+          onChange={this.handleChangeUsername}
+        /> <br/>
         <TextField
           hintText="Please enter your password"
+          floatingLabelText="Password"
+          value={this.state.password}
+          onChange={this.handleChangePassword}
         /> <br/>
-        <RaisedButton label="default" style={style}/>
+        <RaisedButton label="Log in" style={style} onClick={this.props.changeViews}/>
       </div>
     )
   }
