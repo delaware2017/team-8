@@ -4,6 +4,7 @@ var Admin = require('../models/admin');
 var User = require('../models/user');
 var Code = require('../models/code');
 var Transaction = require('../models/transaction');
+var async = require('async');
 
 router.post('/user/signup', function(req, res) {
   Code.findOne({code: req.body.code}, function(err, code) {
@@ -44,10 +45,14 @@ router.post('/login', function(req, res) {
   User.findOne({username: req.body.username}, function(err, user) {
     console.log(user);
     if (err) throw err;
-    if(req.body.password==user.password) {
-      res.send(user._id);
-    }
-    else {
+    if (user) {
+      if(req.body.password==user.password) {
+        res.send(user._id);
+      }
+      else {
+        res.send("unsuccessful login");
+      }
+    } else {
       res.send("unsuccessful login");
     }
   })
@@ -60,6 +65,22 @@ router.post('/balance', function(req, res) {
   })
 })
 
+router.post('/transactions', function(req, res) {
+  User.findById(req.body.id, function(err, user) {
+    if(err) throw err;
+    var info = [];
+    async.each(user.transactions,
+    function(transaction, callback){
+      Transaction.findById(transaction, function(err, transactionInfo) {
+        info.push({"amount": transactionInfo.amount, "retailer": transactionInfo.retailer, "date": transactionInfo.date});
+        callback();
+      });
+    },
+    function (err) {
+      res.send(info);
+    });
+  })
+})
 router.post('/:id/add', function(req, res) {
   User.findById(req.params.id, function(err, user) {
     if(err) throw err;
