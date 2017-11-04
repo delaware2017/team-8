@@ -21,7 +21,12 @@ class App extends Component {
             <h1 className="App-title">Welcome to _name_</h1>
           </header>
         <MuiThemeProvider>
+        {this.state.showMainPage && 
           <UsernameAndPassword changeViews={this.changeViews}/>
+        }
+        {!this.state.showMainPage && 
+          <AdminPage/>
+        }
         </MuiThemeProvider>
       </div>
     );
@@ -32,6 +37,12 @@ class App extends Component {
     this.setState({
       showMainPage: !this.state.showMainPage
     })
+  }
+}
+
+class AdminPage extends Component {
+  constructor(props) {
+    
   }
 }
 
