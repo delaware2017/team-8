@@ -1,4 +1,4 @@
-var express = require('express')
+var express = require('express');
 var router = express.Router();
 var Admin = require('../models/admin');
 var User = require('../models/user');
@@ -17,13 +17,13 @@ router.post('/accessCodes/create/:id', function(req, res) {
       code = Math.floor(Math.random()*9000) + 1000;
       var newCode = new Code({
         code: code,
+        admin: req.params.id
       })
+      console.log(newCode);
       newCode.save(function(err, newCode) {
         if(err) throw err;
         user.accessCodes.push(newCode._id);
-        user.save(function(err, updatedAdmin) {
-          if (err) throw err;
-        })
+        user.save();
         res.send("new code");
       })
     })
@@ -40,6 +40,29 @@ router.post('/accessCodes/:id', function(req, res) {
     }
     else {
       res.send("valid code");
+    }
+  })
+})
+
+router.post('/admin/signup', (req, res) => {
+  var admin = new Admin({
+    "username": req.body.username,
+    "password": req.body.password,
+    "firstName": req.body.firstName,
+    "lastName": req.body.lastName
+  });
+  admin.save();
+  res.send(200);
+})
+
+router.post('/admin/login', function(req, res) {
+  Admin.findOne({username: req.body.username}, function(err, user) {
+    if (err) throw err;
+    if(req.body.password==user.password) {
+      res.send("successful login");
+    }
+    else {
+      res.send("unsuccessful login");
     }
   })
 })
