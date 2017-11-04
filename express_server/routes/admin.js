@@ -3,6 +3,7 @@ var router = express.Router();
 var Admin = require('../models/admin');
 var User = require('../models/user');
 var Code = require('../models/code');
+var async = require('async');
 
 router.post('/accessCodes/create/:id', function(req, res) {
   Admin.findById(req.params.id, function(err, user) {
@@ -64,15 +65,15 @@ router.post('/admin/login', function(req, res) {
     if (err) throw err;
     if(req.body.password==admin.password) {
       var info = [];
-      for(var i=0; i<admin.listOfUsers.length; i++) {
-        User.findById(admin.listOfUsers[i], function(err, user) {
-          info.push({"firstName": user.firstName, "lastName": user.lastName, "balance": user.balance});
-          console.log(info);
-        })
-        console.log(info);
-      }
-      console.log(info);
+      async.each(admin.listOfUsers,
+      function(user, callback){
+        User.findById(user, function(err, userInfo) {
+          info.push({"firstName": userInfo.firstName, "lastName": userInfo.lastName, "balance": userInfo.balance});
+        });
+      },
+    function (err) {
       res.send(info);
+    });
     }
     else {
       res.send("error");
