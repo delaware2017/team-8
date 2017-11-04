@@ -14,6 +14,8 @@ import { IAMService } from '../../services/iam.service';
 })
 export class HomePage implements OnInit {
 
+  qr_code_url = "";
+
   balance_download_interval;
 
   max_amount: string = "";
@@ -44,6 +46,10 @@ export class HomePage implements OnInit {
         });
       }
     }, 1000);
+  }
+
+  getQRCodeUrl() {
+    return this.config.getAPILocation() + "/" + this.iam.getCurrentUser() + "/" + this.max_amount;
   }
 
   // formats a number for display as currency

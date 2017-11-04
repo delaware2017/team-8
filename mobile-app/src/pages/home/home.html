@@ -22,7 +22,7 @@
     <button ion-button full class="transaction" (click)="newTransaction()" *ngIf="!transaction_open">New Transaction</button>
     <ion-card-content *ngIf="transaction_open">
       <div class="qr-container">
-        <qr-code [value]="'http://www.google.com'" [size]="200"></qr-code>
+        <qr-code [value]="getQRCodeUrl()" [size]="200"></qr-code>
       </div>
       <input type="text" class="floating" [(ngModel)]="max_amount" placeholder="Max amount">
       <button ion-button block (click)="finishTransaction()">Done</button>
