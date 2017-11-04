@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Scanner</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <input type="text" class="floating" [(ngModel)]="amount" placeholder="Amount ($)">
+  <p class="error">{{ error_message }}</p>
+  <button ion-button full (click)="makeTransaction()">Make Transaction</button>
+</ion-content>
