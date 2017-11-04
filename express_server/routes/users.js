@@ -69,7 +69,10 @@ router.post('/balance', function(req, res) {
 router.post('/transactions', function(req, res) {
   User.findById(req.body.id, function(err, user) {
     if(err) throw err;
-    var info = [];
+    Transaction.find({'_id': user.transactions}, function(err, docs) {
+      res.send(docs);
+    }).sort({date: -1});
+    /*var info = [];
     async.each(user.transactions,
     function(transaction, callback){
       Transaction.findById(transaction, function(err, transactionInfo) {
@@ -82,7 +85,8 @@ router.post('/transactions', function(req, res) {
     function (err) {
       res.send(info);
     });
-  })
+  })*/
+})
 })
 router.post('/:id/add', function(req, res) {
   User.findById(req.params.id, function(err, user) {
@@ -91,7 +95,8 @@ router.post('/:id/add', function(req, res) {
     var newTransaction = new Transaction({
       "amount": req.body.add,
       "retailer": "Physician",
-      "positive": true
+      "positive": true,
+      "date": Date.now()
     })
     newTransaction.save(function(err, newTransaction) {
       user.transactions.push(newTransaction._id);
@@ -109,7 +114,8 @@ router.post('/:id/:max', function(req, res) {
       var newTransaction = new Transaction({
         "amount": req.body.deduct,
         "retailer": req.body.retailer,
-        "positive": false
+        "positive": false,
+        "date": Date.now()
       })
       newTransaction.save(function(err, newTransaction) {
         user.transactions.push(newTransaction._id);

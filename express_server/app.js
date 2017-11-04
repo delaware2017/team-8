@@ -1,3 +1,4 @@
+//Configuration=================================================================================
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -6,14 +7,11 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var key = require('./secret/key.json');
 var session = require('express-session');
-var passport = require('./config/passport');
 var cookieParser = require('cookie-parser');
 var cors = require('cors');
 
-
 var index = require('./routes/index');
 var users = require('./routes/users');
-var routes = require('./routes/routes');
 var admin = require('./routes/admin');
 var mongoose = require('mongoose');
 var async = require('async');
@@ -23,6 +21,8 @@ var router = express.Router();
 
 var User = require('./models/user');
 var Transaction = require('./models/transaction');
+
+//Function to add balance of $1/day/family member
 setInterval(automaticBalance, 60000);
 function automaticBalance() {
   User.find({}, function(err, users) {
@@ -33,7 +33,8 @@ function automaticBalance() {
       var newTransaction = new Transaction({
           "amount": user.numFamily,
           "retailer": "Daily",
-          "positive": true
+          "positive": true,
+          "date": Date.now()
         })
         newTransaction.save(function(err, transactionInfo) {
           user.transactions.push(newTransaction._id);
@@ -56,16 +57,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(cors({origin: 'http://localhost:3001'})); // 8100
-app.use(routes(passport))
+app.use(cors({origin: 'http://localhost:8100'}));
 app.use(users)
 app.use(index)
 app.use(admin)
 app.use(users)
-app.use('/', index);
-app.use('/users', users);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
