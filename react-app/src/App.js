@@ -21,11 +21,7 @@ class App extends Component {
               <img src={logo} className="App-logo" alt="logo" />
               <h1 className="App-title">Welcome to _name_</h1>
             </header>
-
-
-            
             <MuiThemeProvider>
-
             {this.state.showMainPage && 
               <UsernameAndPassword changeViews={this.changeViews}/>
             }
@@ -37,7 +33,8 @@ class App extends Component {
       );
     }
 
-    changeViews(event) {
+    changeViews(language) {
+      console.log("Got here! " + JSON.stringify(language));
       // Go from main page to admin page.
       this.setState({
         showMainPage: !this.state.showMainPage
@@ -56,22 +53,77 @@ class AdminPage extends Component {
 
         render() {
           return (
-            <div className="AdminPage">
-                <header className="App-header">
-                  <img src={logo} className="App-logo" alt="logo" />
-                  <h1 className="Admin-title">Administrative records</h1>
-                </header>
-
-              <MuiThemeProvider>
-              {this.state.showMainPage && 
-                <UsernameAndPassword changeViews={this.changeViews}/>
-              }
-              {!this.state.showMainPage && 
-                <AdminPage/>
-              }
-              </MuiThemeProvider>
+            <div id="wrapper">
+            <link rel="stylesheet" href="assets/css/main.css" />
+            <script src="assets/js/jquery.min.js"></script>
+            <script src="assets/js/jquery.poptrox.min.js"></script>
+            <script src="assets/js/skel.min.js"></script>
+			      <script src="assets/js/util.js"></script>
+            <script src="assets/js/main.js"></script>
+            <div id="main">
+              <article className="thumb">
+                <a href="images/fulls/01.jpg" className="image"><img src="images/thumbs/01.jpg" alt="" /></a>
+                <h2>Magna feugiat lorem</h2>
+                <p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p>
+              </article>
+              <article className="thumb">
+                <a href="images/fulls/02.jpg" className="image"><img src="images/thumbs/02.jpg" alt="" /></a>
+                <h2>Nisl adipiscing</h2>
+                <p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p>
+              </article>
+              <article className="thumb">
+                <a href="images/fulls/03.jpg" className="image"><img src="images/thumbs/03.jpg" alt="" /></a>
+                <h2>Tempus aliquam veroeros</h2>
+                <p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p>
+              </article>
+              <article className="thumb">
+                <a href="images/fulls/04.jpg" className="image"><img src="images/thumbs/04.jpg" alt="" /></a>
+                <h2>Aliquam ipsum sed dolore</h2>
+                <p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p>
+              </article>
+              <article className="thumb">
+                <a href="images/fulls/05.jpg" className="image"><img src="images/thumbs/05.jpg" alt="" /></a>
+                <h2>Cursis aliquam nisl</h2>
+                <p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p>
+              </article>
+              <article className="thumb">
+                <a href="images/fulls/06.jpg" className="image"><img src="images/thumbs/06.jpg" alt="" /></a>
+                <h2>Sed consequat phasellus</h2>
+                <p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p>
+              </article>
+              <article className="thumb">
+                <a href="images/fulls/07.jpg" className="image"><img src="images/thumbs/07.jpg" alt="" /></a>
+                <h2>Mauris id tellus arcu</h2>
+                <p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p>
+              </article>
+              <article className="thumb">
+                <a href="images/fulls/08.jpg" className="image"><img src="images/thumbs/08.jpg" alt="" /></a>
+                <h2>Nunc vehicula id nulla</h2>
+                <p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p>
+              </article>
+              <article className="thumb">
+                <a href="images/fulls/09.jpg" className="image"><img src="images/thumbs/09.jpg" alt="" /></a>
+                <h2>Neque et faucibus viverra</h2>
+                <p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p>
+              </article>
+              <article className="thumb">
+                <a href="images/fulls/10.jpg" className="image"><img src="images/thumbs/10.jpg" alt="" /></a>
+                <h2>Mattis ante fermentum</h2>
+                <p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p>
+              </article>
+              <article className="thumb">
+                <a href="images/fulls/11.jpg" className="image"><img src="images/thumbs/11.jpg" alt="" /></a>
+                <h2>Sed ac elementum arcu</h2>
+                <p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p>
+              </article>
+              <article className="thumb">
+                <a href="images/fulls/12.jpg" className="image"><img src="images/thumbs/12.jpg" alt="" /></a>
+                <h2>Vehicula id nulla dignissim</h2>
+                <p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p>
+              </article>
             </div>
-          );
+          </div>
+          )
         }
 
 }
@@ -128,16 +180,20 @@ class UsernameAndPassword extends Component {
         return;
       }
 
-        fetch('http://localhost:3001' + '/alogin', {
+      const formBody = "username=" + this.state.username + "&password=" + this.state.password
+
+      fetch('http://localhost:3000' + '/alogin', {
         method: 'POST',
         headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
         body: formBody
       })
-      .then((res) => {
-        console.log("res: " + JSON.stringify(res));
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log("response json: " + JSON.stringify(responseJson));
+        this.props.changeViews(responseJson);
       })
   }
 }
