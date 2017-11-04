@@ -44,7 +44,7 @@ class AdminPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      
+
     }
   }
 }
@@ -58,6 +58,7 @@ class UsernameAndPassword extends Component {
     }
     this.handleChangeUsername = this.handleChangeUsername.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
+    this.auth = this.auth.bind(this);
   }
 
   handleChangePassword(event) {
@@ -88,9 +89,19 @@ class UsernameAndPassword extends Component {
           value={this.state.password}
           onChange={this.handleChangePassword}
         /> <br/>
-        <RaisedButton label="Log in" style={style} onClick={this.props.changeViews}/>
+        <RaisedButton label="Log in" style={style} onClick={this.auth}/>
       </div>
     )
+  }
+
+  auth() {
+    // if succesfull, call this.props.changeViews
+    if (this.state.username.length < 1 || this.state.username.length < 1) {
+      alert("Please make sure you enter both a username and password.");
+      return;
+    }
+
+    
   }
 }
 
