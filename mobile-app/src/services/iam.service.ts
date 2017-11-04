@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class IAMService {
-  local_balance: number;
 
   constructor() {}
 
+  // set the current user in localStorages
   setCurrentUser(user_id) {
     if (user_id == null) {
       localStorage.clear();
@@ -14,6 +14,7 @@ export class IAMService {
     }
   }
 
+  // retrieve the current user from localStorage
   getCurrentUser() {
     return localStorage.getItem('user_id');
   }

@@ -23,6 +23,8 @@ export class MyApp {
       splashScreen.hide();
     });
 
+    // if the user is already stored in localStorage, just log them in
+    // other wise, send them to the landing page so they can sign up or login
     if (iam.getCurrentUser()) {
       this.rootPage = TabsPage;
     } else {

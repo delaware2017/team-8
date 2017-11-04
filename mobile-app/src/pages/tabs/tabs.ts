@@ -21,6 +21,7 @@ export class TabsPage {
   constructor(private navCtrl: NavController, private iam: IAMService) {}
 
   logout() {
+    // remove the user from localStorage and move them to the landing page
     this.iam.setCurrentUser(null);
     this.navCtrl.setRoot(LandingPage);
   }
