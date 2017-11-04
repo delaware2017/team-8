@@ -57,7 +57,17 @@ router.post('/admin/signup', (req, res) => {
     "lastName": req.body.lastName
   });
   admin.save();
-  res.send(listOfUsers);
+  var info = [];
+  async.each(admin.listOfUsers,
+  function(user, callback){
+    User.findById(user, function(err, userInfo) {
+      info.push({"firstName": userInfo.firstName, "lastName": userInfo.lastName, "balance": userInfo.balance});
+      callback();
+    });
+  },
+function (err) {
+  res.send(info);
+});
 })
 
 router.post('/admin/login', function(req, res) {
@@ -69,6 +79,7 @@ router.post('/admin/login', function(req, res) {
       function(user, callback){
         User.findById(user, function(err, userInfo) {
           info.push({"firstName": userInfo.firstName, "lastName": userInfo.lastName, "balance": userInfo.balance});
+          callback();
         });
       },
     function (err) {
