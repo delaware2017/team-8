@@ -8,7 +8,10 @@ var async = require('async');
 //create acess codes for patient to use to sign up
 router.post('/accessCodes/create/:id', function(req, res) {
   Admin.findById(req.params.id, function(err, user) {
-    console.log("found admin");
+    if (err) {
+      res.status(500);
+      console.error("Something went wrong creating a new code: " + err);
+    }
     Code.find({}, function(err, codes) {
       code = Math.floor(Math.random()*9000)+1000;
       for(var i=0; i<codes.length; i++) {
