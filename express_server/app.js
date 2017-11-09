@@ -22,7 +22,7 @@ var User = require('./models/user');
 var Transaction = require('./models/transaction');
 
 //Function to add balance of $1/day/family member
-setInterval(automaticBalance, 60000);
+setInterval(automaticBalance, 30000);
 function automaticBalance() {
   User.find({}, function(err, users) {
     if(err) throw err;
@@ -56,7 +56,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors({origin: 'http://localhost:3001'}));
+app.use(cors({origin: 'http://localhost:8100'}));
 app.use(users)
 app.use(admin)
 app.use(users)
