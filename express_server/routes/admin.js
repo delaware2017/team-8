@@ -4,38 +4,10 @@ var Admin = require('../models/admin');
 var User = require('../models/user');
 var Code = require('../models/code');
 var async = require('async');
-
+import dbActions from '../db.js';
+console.log(dbActions);
 //create acess codes for patient to use to sign up
-router.post('/accessCodes/create/:id', function(req, res) {
-  Admin.findById(req.params.id, function(err, user) {
-    if (err) {
-      res.status(500);
-      console.error("Something went wrong creating a new code: " + err);
-    }
-    Code.find({}, function(err, codes) {
-      code = Math.floor(Math.random()*9000)+1000;
-      for(var i=0; i<codes.length; i++) {
-        if(code==codes[i].code) {
-          code = Math.floor(Math.random()*9000)+1000;
-        }
-      }
-      code = Math.floor(Math.random()*9000) + 1000;
-      var newCode = new Code({
-        code: code,
-        admin: req.params.id,
-        plan: req.body.plan
-      })
-      console.log(newCode);
-      newCode.save(function(err, newCode) {
-        if(err) throw err;
-        user.accessCodes.push(newCode._id);
-        user.save();
-        console.log(user);
-        res.send(newCode.code);
-      })
-    })
-  })
-});
+router.post('/accessCodes/create/:id', );
 
 //check that the access code is valid
 router.post('/accessCodes', function(req, res) {
