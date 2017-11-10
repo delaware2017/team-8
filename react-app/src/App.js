@@ -14,7 +14,8 @@ class App extends Component {
       this.changeViews = this.changeViews.bind(this);
       this.state = {
         showMainPage: true,
-        patients: []
+        patients: [],
+        uid: -1
       }
     }
     render() {
@@ -22,7 +23,7 @@ class App extends Component {
         <div className="App">
             <header className="App-header">
               <img src={logo} className="App-logo" alt="logo" />
-              <h1 className="App-title">Welcome to _name_</h1>
+              <h1 className="App-title">Welcome to Wholesome Wave.</h1>
             </header>
             <MuiThemeProvider>
             {this.state.showMainPage && 
@@ -90,7 +91,7 @@ class AdminPage extends Component {
               {
                 this.props.patients.map((patient, index) => {
                   return (
-                  <article className="thumb">
+                  <article key={index} className="thumb">
                     <a href="images/fulls/01.jpg" className="image"><img src="images/thumbs/01.jpg" alt="" /></a>
                     <h2 style={{'fontSize': '15px'}}><a href="">{patient.firstName} {patient.lastName}: Current balance: ${patient.balance}. Click to add.</a></h2>
                   </article>
@@ -102,13 +103,13 @@ class AdminPage extends Component {
                     <h2 onClick={this.createNewUser} style={{'fontSize': '15px'}}><a href="javascript:void(0);"> Click here to create a new user profile, today, now!</a></h2>
                   </article>
                 <Dialog
-                    title="Dialog With Actions"
+                    title={this.state.uid}
                     actions={actions}
                     modal={false}
                     open={this.state.open}
                     onRequestClose={this.handleClose}
                   >
-                    The actions in this window were passed in as an array of React objects.
+                    This is your code.
                 </Dialog>
             </div>
           </div>
@@ -116,9 +117,26 @@ class AdminPage extends Component {
         }
 
         createNewUser() {
-          this.setState({
-            open: !this.state.open
-          })
+          var userId = -1;
+                fetch('http://localhost:3000' + '/accessCodes/create/59fd9aee504d8e302c9d489a', {
+                  method: 'POST',
+                  headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'x-www-form-urlencoded'
+                  },
+                  body: {
+                    plan: 6
+                  }
+                })
+                .then(response => response.json())
+                .then(responseJson => {
+                  console.log("response json: " + JSON.stringify(responseJson));
+                  userId = responseJson;
+                  this.setState({
+                    open: !this.state.open,
+                    uid: userId
+                  })
+                })
         }
 
 }
