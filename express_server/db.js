@@ -81,3 +81,25 @@ const Code = require('./models/code');
         })
     }
 
+    exports.adminLogin = (req, res) => {
+        console.log("got to admin login: " + req.body.username);
+        return Admin.findOne({username: req.body.username})
+            .then((admin, err) => {
+                if (req.body.password === admin.password) {
+                    return User.find({"_id": admin.listOfUsers})
+                        .then((docs, err) => {
+                            if (err) throw err;
+                            res.send(docs);
+                        }).catch((err) => {
+                            res.status(500);
+                            console.error("Something went wrong: " + err);
+                            return;
+                        })
+                } else {
+                    res.status(500);
+                    console.log("Bad username/password combo.");
+                    return;
+                }
+            })
+    }
+
