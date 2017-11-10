@@ -5,7 +5,7 @@ var User = require('../models/user');
 var Code = require('../models/code');
 var async = require('async');
 var dbActions = require('../db');
-console.log(dbActions);
+
 //create acess codes for patient to use to sign up
 router.post('/accessCodes/create/:id', dbActions.accessCodesCreateId);
 

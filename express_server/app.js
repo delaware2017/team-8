@@ -39,7 +39,7 @@ function automaticBalance() {
           user.transactions.push(newTransaction._id);
           user.balance=(parseFloat(user.balance)+user.numFamily).toString();
           user.save();
-          console.log(user);
+          // console.log(user);
         })
     })
 
