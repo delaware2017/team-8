@@ -10,35 +10,10 @@ var dbActions = require('../db');
 router.post('/accessCodes/create/:id', dbActions.accessCodesCreateId);
 
 //check that the access code is valid
-router.post('/accessCodes', function(req, res) {
-  Code.findOne({code: req.body.code}, function(err, code) {
-    if (err) {
-      res.send("no code");
-    }
-    if(!code) {
-      res.send("no code")
-    }
-    else if(code.user) {
-      res.send("code already used");
-    }
-    else {
-      res.send("valid code");
-    }
-  })
-})
+router.post('/accessCodes', dbActions.accessCodes);
 
 //admin signup
-router.post('/asignup', (req, res) => {
-  var admin = new Admin({
-    "username": req.body.username,
-    "password": req.body.password,
-    "firstName": req.body.firstName,
-    "lastName": req.body.lastName
-  });
-  admin.save(function(err, newAdmin) {
-    console.log(newAdmin);
-  });
-});
+router.post('/asignup', dbActions.adminSignup);
 
 //admin login
 router.post('/alogin', function(req, res) {

@@ -62,3 +62,22 @@ const Code = require('./models/code');
             return;
         })
     }
+
+
+    exports.adminSignup = (req, res) => {
+        var admin = new Admin({
+            "username": req.body.username,
+            "password": req.body.password,
+            "firstName": req.body.firstName,
+            "lastName": req.body.lastName
+        });
+        return admin.save()
+        .then(admin => {
+            console.log("Admin saved.");
+            res.status(200);
+        }).catch(error => {
+            console.error("Something went wrong:  " + error);
+            res.status(500);
+        })
+    }
+
