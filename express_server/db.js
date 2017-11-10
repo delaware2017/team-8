@@ -2,12 +2,7 @@ const Promise = require('bluebird');
 
 Promise.promisifyAll(require("mongoose"));
 
-class dbActions { 
-    constructor() {
-        console.log("DB actions class initialized.");
-    }
-
-    accessCodesCreateId(req, res) {
+    exports.accessCodesCreateId = (req, res) => {
         return Admin.findById(req.params.id)
         .then((admin) => {
             return Code.find({})
@@ -47,4 +42,3 @@ class dbActions {
             return;
         })
     }
-}

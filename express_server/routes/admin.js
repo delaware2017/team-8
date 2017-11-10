@@ -4,10 +4,10 @@ var Admin = require('../models/admin');
 var User = require('../models/user');
 var Code = require('../models/code');
 var async = require('async');
-import dbActions from '../db.js';
+var dbActions = require('../db');
 console.log(dbActions);
 //create acess codes for patient to use to sign up
-router.post('/accessCodes/create/:id', );
+router.post('/accessCodes/create/:id', dbActions.accessCodesCreateId);
 
 //check that the access code is valid
 router.post('/accessCodes', function(req, res) {
